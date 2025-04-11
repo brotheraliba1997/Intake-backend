@@ -1,0 +1,783 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Company {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  name        String
+  email       String  @unique
+  phone       String  @unique
+  address     String?
+  city        String?
+  zipCode     String?
+  state       String?
+  description String?
+
+  users             User[]
+  scheduledMeetings ScheduledMeeting[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model User {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  email       String   @unique
+  phone       String?
+  firstName   String?
+  lastName    String?
+  password    String?
+  role        RoleType @default(client)
+  address     String?
+  city        String?
+  zipCode     String?
+  state       String?
+  description String?
+  summary     String?
+  profession  String?  @default("")
+
+  profileImageUrl String? @default("profile-uploads/662fe80bf1be4d55e8a02d9a/1714637040328/FXOvrm8lMhVoSX7DWGOKagaapcU7ri6mI3Bh5ccT.jpg")
+
+  referenceNumber String @unique
+
+  companyId String?  @db.ObjectId // Ensure this matches the native type of Provider.id
+  company   Company? @relation(fields: [companyId], references: [id])
+
+  doctorId String? @db.ObjectId // Reference to another User (as a doctor)
+  doctor   User?   @relation("DoctorRelation", fields: [doctorId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  patients User[] @relation("DoctorRelation")
+
+  programs     UserProgram[]
+  subscription Subscription[]
+
+  doctorMeetings ScheduledMeeting[] @relation("DoctorScheduledMeetingRelation")
+  clientMeetings ScheduledMeeting[] @relation("ClientScheduledMeetingRelation")
+
+  meetingChats               MeetingMessages[]
+  meetingParticipants        MeetingParticipants[]
+  meetingCurrentParticipants MeetingCurrentParticipants[]
+  meetingLogs                MeetingLogs[]
+
+  chats    ChatUser[]
+  messages Message[]
+
+  notifications UserNotification[]
+
+  doctorMedicationSchedule MedicationSchedule[] @relation("DoctorMedicationScheduleRelation")
+  clientMedicationSchedule MedicationSchedule[] @relation("ClientMedicationScheduleRelation")
+
+  // gpsTrackingId String      @db.ObjectId
+  // GpsTracking   GpsTracking @relation(fields: [gpsTrackingId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  // GpsTracking   GpsTracking?
+
+  // GpsTracking GpsTracking?
+
+  gpsTracking         GpsTracking?
+  // gpsTrackingId String?  @unique @db.ObjectId // Foreign key
+  deviceReadings      DeviceReading[]
+  devices             ClientDevice[]
+  medicationTrackings MedicationTracking[]
+  userSessions        UserSession[]
+  doctorAppointment   AppointmentDoctorAndClient[] @relation("DoctorAppointmentRelation")
+  clientAppointment   AppointmentDoctorAndClient[] @relation("ClientDoctorAppointmentRelation")
+
+  // appointment         AppointmentDoctorAndClient[]
+  // appointment         AppointmentDoctorAndClient[]
+}
+
+model UserSession {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  userId String? @db.ObjectId // Reference to another User (as a doctor)
+  user   User?   @relation(fields: [userId], references: [id])
+
+  fcmToken   String @unique
+  sessionId  String @unique
+  deviceInfo Json
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum RoleType {
+  super_admin
+  admin
+  doctor
+  client
+}
+
+model Otp {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  email     String
+  otp       String
+  expiresAt DateTime @default(now()) @map("expiresAt")
+
+  @@index([expiresAt], map: "expires_at_idx")
+}
+
+// model Provider {
+//   id          String            @id @default(auto()) @map("_id") @db.ObjectId
+//   name        String            @unique
+//   email       String            @unique
+//   phone       String            @unique
+//   address     String?
+//   city        String?
+//   description String?
+//   zipCode     String?
+//   state       String?
+//   users       User[]
+//   programs    ProviderProgram[]
+// }
+
+model Program {
+  id          String        @id @default(auto()) @map("_id") @db.ObjectId
+  name        String        @unique
+  description String?
+  providers   UserProgram[]
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+}
+
+model UserProgram {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String  @db.ObjectId
+  user      User    @relation(fields: [userId], references: [id])
+  programId String  @db.ObjectId
+  program   Program @relation(fields: [programId], references: [id])
+
+  @@unique([userId, programId])
+}
+
+model Service {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  name        String    @unique
+  type        String    @default("")
+  description String?
+  setupFee    Int       @default(0)
+  monthlyFee  Int       @default(0)
+  parentId    String?   @db.ObjectId
+  level       Int       @default(0)
+  parent      Service?  @relation("ParentToChild", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  children    Service[] @relation("ParentToChild")
+
+  subscriptions ServiceOnSubscription[]
+
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  clientDevices ClientDevice[]
+}
+
+model ServiceOnSubscription {
+  id             String @id @default(auto()) @map("_id") @db.ObjectId
+  subscriptionId String @db.ObjectId
+  serviceId      String @db.ObjectId
+
+  subscription Subscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+  service      Service      @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+}
+
+// -------------------------- Subscription --------------------------------//
+// model Subscription {
+//   id String @id @default(auto()) @map("_id") @db.ObjectId
+
+//   clientId String @db.ObjectId
+//   client   User   @relation(fields: [clientId], references: [id])
+
+//   payeeType PayeeType @default(individual)
+
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+// }
+
+// enum PayeeType {
+//   individual
+//   business
+// }
+
+model Subscription {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  clientId String @db.ObjectId
+  client   User   @relation(fields: [clientId], references: [id])
+
+  payeeType PayeeType @default(Individual)
+
+  businessDetails   BusinessDetails? @relation(fields: [businessDetailsId], references: [id])
+  businessDetailsId String?          @db.ObjectId
+
+  services ServiceOnSubscription[]
+
+  setupFee        Float    @default(0)
+  subscriptionFee Float    @default(0)
+  expiryAt        DateTime @default(now())
+
+  summary String @default("")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model BusinessDetails {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  name              String
+  contactPersonName String
+
+  email   String  @unique
+  phone   String  @unique
+  address String?
+  city    String?
+  zipCode String?
+  state   String?
+
+  // taxId String @unique
+
+  // contactEmail String
+
+  subscriptions Subscription[]
+}
+
+enum PayeeType {
+  Individual
+  Bussiness
+}
+
+// model DeviceFeed {
+//   id String @id @default(auto()) @map("_id") @db.ObjectId
+
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+// }
+
+// -------------------------- Devices --------------------------------//
+
+model ClientDevice {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  // subscription Subscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+  // subscriptionId String   @db.ObjectId
+  serviceId String  @db.ObjectId
+  service   Service @relation(fields: [serviceId], references: [id])
+
+  clientId String @db.ObjectId
+  client   User   @relation(fields: [clientId], references: [id])
+
+  title              String  @default("")
+  imageUrl           String  @default("")
+  type               String? @default("")
+  modelNo            String? @default("")
+  macAddress         String? @default("")
+  serviceUuid        String? @default("")
+  characteristicUuid String? @default("")
+
+  setupStatus DeviceSetupStatus @default(PENDING)
+  status      DeviceStatus      @default(IN_ACTIVE)
+
+  deviceReadings DeviceReading[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum DeviceSetupStatus {
+  PENDING
+  COMPLETED
+}
+
+enum DeviceStatus {
+  ACTIVE
+  IN_ACTIVE
+}
+
+model DeviceReading {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  clientId String @db.ObjectId
+  client   User   @relation(fields: [clientId], references: [id])
+
+  deviceId String       @db.ObjectId
+  device   ClientDevice @relation(fields: [deviceId], references: [id])
+
+  type String @default("")
+
+  readings Json // Store readings as JSON
+
+  timestamp DateTime @default(now()) // Time of reading
+}
+
+// -------------------------- Meetings --------------------------------//
+model ScheduledMeeting {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  companyId String?  @db.ObjectId // Ensure this matches the native type of Provider.id
+  company   Company? @relation(fields: [companyId], references: [id])
+
+  doctorId String @db.ObjectId
+  doctor   User   @relation("DoctorScheduledMeetingRelation", fields: [doctorId], references: [id])
+
+  clientId String @db.ObjectId
+  client   User   @relation("ClientScheduledMeetingRelation", fields: [clientId], references: [id])
+
+  communicationType MeetingCommunicationTypes @default(VIDEO)
+  meetingType       MeetingTypes              @default(SINGLE)
+
+  date String?
+  time String?
+
+  interpreterRequired MeetingInterpreterRequiredTypes @default(NO)
+  preferredLanguage   MeetingPreferredLanguages       @default(ENGLISH)
+  summary             String?
+
+  repeatDays   RepeatDay[]
+  repeatDates  RepeatDate[]
+  meetingRooms MeetingRoom[]
+
+  status ScheduledMeetingStatus @default(SCHEDULED)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  // User      User?    @relation(fields: [userId], references: [id])
+  // userId    String?  @db.ObjectId
+  // User      User?    @relation(fields: [userId], references: [id])
+  // userId    String?  @db.ObjectId
+}
+
+enum ScheduledMeetingStatus {
+  SCHEDULED
+  ACTIVE
+  COMPLETED
+}
+
+model RepeatDay {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  meetingId String           @db.ObjectId
+  meeting   ScheduledMeeting @relation(fields: [meetingId], references: [id])
+
+  day  DateTime
+  time DateTime
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model RepeatDate {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  meetingId String           @db.ObjectId
+  meeting   ScheduledMeeting @relation(fields: [meetingId], references: [id])
+
+  date DateTime
+  time String
+}
+
+enum MeetingPreferredLanguages {
+  ENGLISH
+  SPANISH
+  SOMALI
+  ARABIC
+}
+
+enum MeetingInterpreterRequiredTypes {
+  YES
+  NO
+}
+
+enum MeetingCommunicationTypes {
+  AUDIO
+  VIDEO
+}
+
+enum MeetingTypes {
+  SINGLE
+  REPEAT
+}
+
+model MeetingRoom {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  duration Int? // Duration in seconds
+
+  startTime DateTime  @default(now())
+  endTime   DateTime?
+
+  scheduledMeetingId String           @db.ObjectId
+  scheduledMeeting   ScheduledMeeting @relation(fields: [scheduledMeetingId], references: [id])
+
+  status MeetingStatus @default(ACTIVE)
+
+  agenda String?
+
+  clientFeedback String?
+  doctorFeedback String?
+
+  // participants MeetingParticipants[]
+  chat        MeetingMessages[]
+  meetingLogs MeetingLogs[]
+
+  meetingParticipants MeetingParticipants[]
+  currentParticipants MeetingCurrentParticipants[]
+
+  // meetingTime DateTime
+  // meetingDate      DateTime
+  // meetingTitle     String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum MeetingStatus {
+  ACTIVE
+  COMPLETED
+}
+
+model MeetingMessages {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  senderName String
+  message    String
+
+  senderId String? @db.ObjectId
+  sender   User?   @relation(fields: [senderId], references: [id])
+
+  meetingRoomId String      @db.ObjectId
+  meetingRoom   MeetingRoom @relation(fields: [meetingRoomId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model MeetingParticipants {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  name String @default("")
+
+  uid String @default("")
+
+  userId String? @db.ObjectId
+  user   User?   @relation(fields: [userId], references: [id])
+
+  meetingRoomId String      @db.ObjectId
+  meetingRoom   MeetingRoom @relation(fields: [meetingRoomId], references: [id])
+
+  createdAt DateTime @default(now())
+  // meetingStartTime DateTime
+  // meetingEndTime   DateTime
+  // meetingIssues    String
+  // meetingDate      DateTime
+
+  @@unique([meetingRoomId, userId]) // Composite unique constraint
+}
+
+model MeetingCurrentParticipants {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  name String @default("")
+
+  uid String @default("")
+
+  userId String? @db.ObjectId
+  user   User?   @relation(fields: [userId], references: [id])
+
+  meetingRoomId String      @db.ObjectId
+  meetingRoom   MeetingRoom @relation(fields: [meetingRoomId], references: [id])
+
+  createdAt DateTime @default(now())
+  // meetingStartTime DateTime
+  // meetingEndTime   DateTime
+  // meetingIssues    String
+  // meetingDate      DateTime
+
+  @@unique([meetingRoomId, userId]) // Composite unique constraint
+}
+
+model MeetingLogs {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  meetingRoomId String      @db.ObjectId
+  meetingRoom   MeetingRoom @relation(fields: [meetingRoomId], references: [id])
+
+  name String @default("")
+
+  uid String @default("")
+
+  userId String? @db.ObjectId
+  user   User?   @relation(fields: [userId], references: [id])
+
+  logType MeetingLogType @default(START)
+
+  logMessage String? // Optional message for additional information
+  createdAt  DateTime @default(now()) // When the log entry was created
+
+  @@index([meetingRoomId]) // Index for faster queries on meeting logs by meeting
+  @@index([userId]) // Index for faster queries on meeting logs by user
+}
+
+enum MeetingLogType {
+  START
+  JOIN
+  LEAVE
+  DISCONNECTED
+  ISSUE
+  MESSAGE
+  END
+}
+
+// -------------------------- Chat --------------------------------//
+// model Chat {
+//   id String @id @default(auto()) @map("_id") @db.ObjectId
+
+//   name    String? // For group chats
+//   isGroup Boolean @default(false)
+
+//   lastMessageId String? @unique() @db.ObjectId
+
+//   participants ChatUser[]
+//   messages     Message[]  @relation("messageToChatRelation")
+
+//   lastMessage Message? @relation("lastMessageToChatRelation", fields: [lastMessageId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+
+//   // @@index([lastMessageId], map: "Chat_lastMessageId_index")
+// }
+model Chat {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  name    String? // For group chats
+  isGroup Boolean @default(false)
+
+  participants ChatUser[]
+  messages     Message[]  @relation("messageToChatRelation")
+
+  lastMessageId String?  @db.ObjectId
+  lastMessage   Message? @relation("lastMessageToChatRelation", fields: [lastMessageId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // @@index([lastMessageId])
+}
+
+model ChatUser {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  userId String @db.ObjectId
+  chatId String @db.ObjectId
+
+  hasSeen Boolean @default(false)
+
+  user User @relation(fields: [userId], references: [id])
+  chat Chat @relation(fields: [chatId], references: [id])
+
+  joinedAt DateTime @default(now())
+
+  @@unique([userId, chatId]) // Ensures a user is not duplicated in a chat
+}
+
+model Message {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  chatId   String @db.ObjectId
+  senderId String @db.ObjectId
+
+  content     String
+  messageType String @default("text")
+
+  seenBy String[] @db.ObjectId
+
+  chat   Chat @relation("messageToChatRelation", fields: [chatId], references: [id])
+  sender User @relation(fields: [senderId], references: [id])
+
+  lastMessageChat Chat[] @relation("lastMessageToChatRelation")
+
+  createdAt DateTime @default(now())
+}
+
+// -------------------------- Notification --------------------------------//
+model Notification {
+  id      String           @id @default(auto()) @map("_id") @db.ObjectId
+  type    NotificationType
+  title   String
+  message String
+  data    Json?            @default("{}")
+
+  createdAt DateTime @default(now())
+
+  recipients UserNotification[]
+}
+
+model UserNotification {
+  id             String    @id @default(auto()) @map("_id") @db.ObjectId
+  userId         String    @db.ObjectId
+  notificationId String    @db.ObjectId
+  isRead         Boolean   @default(false)
+  isArchived     Boolean   @default(false)
+  readAt         DateTime?
+
+  user         User         @relation(fields: [userId], references: [id])
+  notification Notification @relation(fields: [notificationId], references: [id])
+
+  @@unique([userId, notificationId]) // Ensure each user can only receive a specific notification once
+}
+
+enum NotificationType {
+  MESSAGE // Notification about a new message
+  REGISTRATION // Notification about a new user registration
+  SUBSCRIPTION // Notification about subscription updates
+  START_MEETING // Notification about a scheduled meeting
+  MEETING // Notification about a scheduled meeting
+  END_MEETING // Notification about a scheduled meeting
+  ALERT // Generic alert or notification
+  CUSTOM // Custom notification type
+}
+
+// -------------------------- Medication Schedule --------------------------------//
+model MedicationSchedule {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  // doctorId    String       @db.ObjectId
+  // patientId   String       @db.ObjectId
+  startDate DateTime // Start date of the schedule
+  endDate   DateTime // End date of the schedule
+
+  medications Medication[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  doctorId String @db.ObjectId
+  doctor   User   @relation("DoctorMedicationScheduleRelation", fields: [doctorId], references: [id])
+
+  clientId String @db.ObjectId
+  client   User   @relation("ClientMedicationScheduleRelation", fields: [clientId], references: [id])
+}
+
+model Medication {
+  id            String               @id @default(auto()) @map("_id") @db.ObjectId
+  scheduleId    String               @db.ObjectId
+  name          String
+  dosage        String
+  instructions  String?
+  doseSchedules DoseSchedule[]
+  tracking      MedicationTracking[]
+  createdAt     DateTime             @default(now())
+  updatedAt     DateTime             @updatedAt
+
+  schedule     MedicationSchedule @relation(fields: [scheduleId], references: [id])
+  // Prescription Prescription[]
+
+  @@unique([scheduleId, name]) // Ensure medication names are unique per schedule
+}
+
+model DoseSchedule {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  medicationId String   @db.ObjectId
+  time         String // Time of the dose (e.g., "08:00 AM")
+  createdAt    DateTime @default(now())
+
+  medication Medication @relation(fields: [medicationId], references: [id], onDelete: Cascade)
+
+  @@unique([medicationId, time])
+}
+
+model MedicationTracking {
+  id           String           @id @default(auto()) @map("_id") @db.ObjectId
+  medicationId String           @db.ObjectId
+  date         DateTime // Date for the medication tracking
+  time         String // Time for the specific dose
+  status       MedicationStatus @default(PENDING) // Status (e.g., TAKEN, MISSED, DELAYED)
+  notes        String? // Optional notes for tracking
+  createdAt    DateTime         @default(now())
+  clientId     String           @db.ObjectId // ✅ Ensure the field exists
+  doctor       User             @relation(fields: [clientId], references: [id])
+
+  medication Medication @relation(fields: [medicationId], references: [id], onDelete: Cascade)
+}
+
+enum MedicationStatus {
+  PENDING
+  TAKEN
+  MISSED
+  DELAYED
+  SKIPPED
+}
+
+// -------------------------- GPS Tracking --------------------------------//
+model GpsTracking {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String @unique @db.ObjectId // Foreign key to ensure one-to-one
+
+  currentLocationId String?   @db.ObjectId
+  currentLocation   Location? @relation("CurrentLocation", fields: [currentLocationId], references: [id])
+
+  locations Location[] @relation("UserLocations")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Location {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  gpsTrackingId String      @db.ObjectId
+  gpsTracking   GpsTracking @relation("UserLocations", fields: [gpsTrackingId], references: [id], onUpdate: NoAction, onDelete: NoAction)
+
+  gpsCurrentlocation GpsTracking[] @relation("CurrentLocation")
+
+  latitude  Float
+  longitude Float
+
+  address   String?
+  timestamp DateTime @default(now())
+}
+
+model AppointmentDoctorAndClient {
+  id              String            @id @default(auto()) @map("_id") @db.ObjectId
+  doctorId        String            @db.ObjectId
+  clientId        String            @db.ObjectId
+  appointmentDate DateTime
+  status          AppointmentStatus @default(PENDING)
+  reason          String
+  // prescription    Prescription?
+  notes           String?
+  // createdAt       DateTime          @default(now())
+
+  doctor User @relation("DoctorAppointmentRelation", fields: [doctorId], references: [id])
+  client User @relation("ClientDoctorAppointmentRelation", fields: [clientId], references: [id])
+}
+
+// model Prescription {
+//   id            String                     @id @default(auto()) @map("_id") @db.ObjectId
+//   medicationId  String                     @db.ObjectId
+//   medicines     Medication                 @relation(fields: [medicationId], references: [id]) // Store array of medicines as JSON
+//   appointmentId String                     @unique @db.ObjectId
+//   appointment   AppointmentDoctorAndClient @relation(fields: [appointmentId], references: [id])
+// }
+
+enum AppointmentStatus {
+  PENDING
+  CONFIRMED
+  COMPLETED
+  CANCELLED
+}
