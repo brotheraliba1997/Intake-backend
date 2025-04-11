@@ -36,26 +36,7 @@ export class SubscriptionService {
     }
 
     let bussinesDetailsFound = null;
-    if (payeeType === 'Bussiness') {
-      try {
-        bussinesDetailsFound = await this.prisma.businessDetails.create({
-          data: businessDetails,
-        });
-      } catch (error) {
-        console.log(error, "Bussiness")
-        if (error?.meta?.target == 'subscription_email_key') {
-          throw new BadRequestException(
-            'Business already exists with this email',
-          );
-        } else if (error?.meta?.target == 'subscription_phone_key') {
-          throw new BadRequestException(
-            'Business already exists with this phone',
-          );
-        } else {
-          throw new BadRequestException('Bussiness data is missing');
-        }
-      }
-    }
+   
 
     const today = new Date();
     const expiryDate = new Date();
@@ -72,9 +53,7 @@ export class SubscriptionService {
             serviceId: item,
           })),
         },
-        businessDetailsId: bussinesDetailsFound
-          ? bussinesDetailsFound.id
-          : null,
+      
         setupFee,
         subscriptionFee,
         summary,
@@ -147,44 +126,8 @@ export class SubscriptionService {
       }
 
       let bussinesDetailData = null;
-      if (existingRecord?.businessDetailsId) {
-        if (payeeType === 'Bussiness') {
-          bussinesDetailData = await this.prisma.businessDetails.update({
-            where: { id: existingRecord.businessDetailsId },
-            data: businessDetails,
-          });
-        } else if (payeeType === 'Individual') {
-          await this.prisma.businessDetails.delete({
-            where: { id: existingRecord.businessDetailsId },
-          });
-        }
-      } else if (payeeType === 'Bussiness') {
-        bussinesDetailData = await this.prisma.businessDetails.create({
-          data: businessDetails,
-        });
-      }
-
-      const subscription = await this.prisma.subscription.update({
-        where: { id },
-        data: {
-          clientId,
-          payeeType,
-          businessDetailsId: bussinesDetailData ? bussinesDetailData?.id : null,
-          services: {
-            create: services.map((item) => ({
-              serviceId: item,
-            })),
-          },
-          setupFee,
-          subscriptionFee,
-          summary,
-        },
-      });
-      return response.status(200).send({
-        status: 'success',
-        message: 'Subscription updated successfully',
-        data: subscription,
-      });
+    
+   
     } catch (error) {
       if (error?.meta?.target == 'clientId') {
         return response.status(422).send({
@@ -209,7 +152,7 @@ export class SubscriptionService {
         include: {
           client: true,
           services: true,
-          businessDetails: true
+         
 
         }
       });
@@ -253,7 +196,7 @@ export class SubscriptionService {
           ...where,
         },
         include: {
-          businessDetails: true,
+         
           client: true
         },
         skip,

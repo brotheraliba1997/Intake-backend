@@ -16,7 +16,6 @@ import * as AWS from 'aws-sdk';
 export class UserService {
   constructor(private prisma: PrismaService) {}
 
-
   async create(request: CreateUserDto) {
     const {
       firstName,
@@ -88,7 +87,7 @@ export class UserService {
     // try {
     const lastUser = await this.prisma.user.findFirst({
       orderBy: {
-        createdAt: 'desc', // Ensure you're ordering by creation date or any unique identifier
+        createdAt: 'desc', 
       },
     });
     const lastUserRefrenceNumber = lastUser.referenceNumber ?? 'AX00000';
@@ -103,30 +102,7 @@ export class UserService {
     });
 
     return userCreated;
-    // return response.status(200).send({
-    //   status: 'success',
-    //   message: 'User created successfully',
-    // });
-    // } catch (error) {
-    //   console.log('err=>', error);
-    //   if (error?.meta?.target == 'User_email_key') {
-    //     return response.status(422).send({
-    //       status: 'error',
-    //       message: 'Account already exists with this email',
-    //     });
-    //   } else if (error?.meta?.target == 'User_phone_key') {
-    //     return response.status(422).send({
-    //       status: 'error',
-    //       message: 'Account already exists with this phone',
-    //     });
-    //   } else {
-    //     return response.status(422).send({
-    //       status: 'error',
-    //       message: 'Something went wrong while creating account',
-    //       meta: error.message,
-    //     });
-    //   }
-    // }
+
   }
 
   async update(id: string, request: UpdateUserDto, response): Promise<any> {
@@ -247,11 +223,7 @@ export class UserService {
     try {
       const user = await this.prisma.user.findUnique({
         where: { id },
-        include: {
-          programs: {
-            select: { program: { select: { id: true, name: true } } },
-          },
-        },
+        include: {},
         // select: {
         //   id: true,
         //   firstName: true,
@@ -379,15 +351,7 @@ export class UserService {
               name: true,
             },
           },
-          programs: {
-            select: {
-              program: {
-                select: {
-                  name: true,
-                },
-              },
-            },
-          },
+
           doctor: {
             select: {
               id: true,
@@ -395,7 +359,6 @@ export class UserService {
               lastName: true,
             },
           },
-          devices: { include: { service: true } },
         },
         // select: {
         //   id: true,

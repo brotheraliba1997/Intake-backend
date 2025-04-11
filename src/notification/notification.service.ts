@@ -5,14 +5,14 @@ import {
 } from './dto/get-notifications.dto';
 import { paginate } from 'src/common/pagination/paginate';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { FCMService } from './fcm.service';
+// import { FCMService } from './fcm.service';
 
 @Injectable()
 export class NotificationService {
   constructor(
     private prisma: PrismaService,
     // private readonly oneSignalService: OneSignalService,
-    private readonly fcmService: FCMService,
+    // private readonly fcmService: FCMService,
     // private readonly webSocketServices: WebsocketGateway,
   ) {}
 
@@ -40,7 +40,7 @@ export class NotificationService {
     // );
     //  await this.webSocketServices.sendNotification(recipients, notificationData);
 
-    await this.fcmService.sendNotification(recipients, notificationCreated);
+    // await this.fcmService.sendNotification(recipients, notificationCreated);
 
     return notificationCreated;
   }
@@ -77,7 +77,7 @@ export class NotificationService {
     //   notificationCreated,
     // );
 
-    await this.fcmService.sendNotification(recipients, notificationCreated);
+    // await this.fcmService.sendNotification(recipients, notificationCreated);
 
     //  await this.webSocketServices.sendNotification(recipients, notificationData);
     return notificationCreated;

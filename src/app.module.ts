@@ -16,7 +16,7 @@ import { NotificationModule } from './notification/notification.module';
 // import { MeetingRoomModule } from './meetingRoom/meetingRoom.module';
 import { SubscriptionModule } from './subscription/subscription.module';
 
-import { UserSessionModule } from './userSession/userSession.module';
+// import { UserSessionModule } from './userSession/userSession.module';
 
 // import { MeetingDetailModule } from './meetingDetail/meetingDetail.module';
 
@@ -33,7 +33,7 @@ import { UserSessionModule } from './userSession/userSession.module';
     SubscriptionModule,
 
 
-    UserSessionModule,
+    // UserSessionModule,
 
   ],
   controllers: [AppController],

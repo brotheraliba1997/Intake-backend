@@ -4,15 +4,15 @@ import { NotificationService } from './notification.service';
 import { PrismaModule } from 'src/prisma/prisma.module';
 import { NotificationController } from './notification.controller';
 // import { WebSocketModule } from 'src/websocket/websocket.module';
-import { FCMService } from './fcm.service';
+// import { FCMService } from './fcm.service';
 import { OneSignalService } from './onesignal.service';
-import { UserSessionModule } from 'src/userSession/userSession.module';
+// import { UserSessionModule } from 'src/userSession/userSession.module';
 
 @Module({
-  imports: [PrismaModule,  UserSessionModule],
+  imports: [PrismaModule],
   // imports: [PrismaModule, WebSocketModule, UserSessionModule],
   controllers: [NotificationController],
-  providers: [NotificationService, FCMService, OneSignalService],
-  exports: [NotificationService, FCMService, OneSignalService],
+  providers: [NotificationService, OneSignalService],
+  exports: [NotificationService, OneSignalService],
 })
 export class NotificationModule {}
