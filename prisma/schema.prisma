@@ -25,8 +25,8 @@ model Company {
   state       String?
   description String?
 
-  users             User[]
-  scheduledMeetings ScheduledMeeting[]
+  users User[]
+  // scheduledMeetings ScheduledMeeting[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -76,8 +76,6 @@ model User {
 
   notifications UserNotification[]
 
-
-
   // gpsTrackingId String      @db.ObjectId
   // GpsTracking   GpsTracking @relation(fields: [gpsTrackingId], references: [id])
 
@@ -87,10 +85,7 @@ model User {
 
   // GpsTracking GpsTracking?
 
-
   // gpsTrackingId String?  @unique @db.ObjectId // Foreign key
-
-
 
   doctorAppointment AppointmentDoctorAndClient[] @relation("DoctorAppointmentRelation")
   clientAppointment AppointmentDoctorAndClient[] @relation("ClientDoctorAppointmentRelation")
@@ -214,8 +209,8 @@ enum PayeeType {
 model ScheduledMeeting {
   id String @id @default(auto()) @map("_id") @db.ObjectId
 
-  companyId String?  @db.ObjectId // Ensure this matches the native type of Provider.id
-  company   Company? @relation(fields: [companyId], references: [id])
+  companyId String? @db.ObjectId // Ensure this matches the native type of Provider.id
+  // company   Company? @relation(fields: [companyId], references: [id])
 
   doctorId String @db.ObjectId
   doctor   User   @relation("DoctorScheduledMeetingRelation", fields: [doctorId], references: [id])
@@ -237,7 +232,7 @@ model ScheduledMeeting {
   repeatDates RepeatDate[]
   // meetingRooms MeetingRoom[]
 
-  status ScheduledMeetingStatus @default(SCHEDULED)
+  // status ScheduledMeetingStatus @default(SCHEDULED)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -247,11 +242,11 @@ model ScheduledMeeting {
   // userId    String?  @db.ObjectId
 }
 
-enum ScheduledMeetingStatus {
-  SCHEDULED
-  ACTIVE
-  COMPLETED
-}
+// enum ScheduledMeetingStatus {
+//   SCHEDULED
+//   ACTIVE
+//   COMPLETED
+// }
 
 model RepeatDay {
   id String @id @default(auto()) @map("_id") @db.ObjectId
@@ -543,3 +538,68 @@ enum AppointmentStatus {
   COMPLETED
   CANCELLED
 }
+
+// question section for intake from
+
+model Question {
+  id           String           @id @default(auto()) @map("_id") @db.ObjectId
+  title        String
+  type         InputTypeOption?
+  options      Option[]
+  FormQuestion FormQuestion[]
+  SubQuestion  SubQuestion[]
+}
+
+model Option {
+  id            String          @id @default(auto()) @map("_id") @db.ObjectId
+  title         String
+  type          InputTypeOption
+  question      Question?       @relation(fields: [questionId], references: [id])
+  questionId    String?         @db.ObjectId
+  SubQuestion   SubQuestion?    @relation(fields: [subQuestionId], references: [id])
+  subQuestionId String?         @db.ObjectId
+}
+
+model SubQuestion {
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  question      Question? @relation(fields: [subQuestionId], references: [id])
+  subQuestionId String?   @db.ObjectId
+  title         String
+  options       Option[]
+}
+
+enum InputTypeOption {
+  file
+  text
+  radio
+  checkbox
+  table
+}
+
+model Form {
+  id        String         @id @default(auto()) @map("_id") @db.ObjectId
+  title     String
+  createdAt DateTime       @default(now())
+  questions FormQuestion[] // linked questions
+}
+
+model FormQuestion {
+  id         String          @id @default(auto()) @map("_id") @db.ObjectId
+  form       Form            @relation(fields: [formId], references: [id])
+  formId     String          @db.ObjectId
+  question   Question?       @relation(fields: [questionId], references: [id])
+  questionId String?         @db.ObjectId
+  text       String
+  inputType  InputTypeOption
+  createdAt  DateTime        @default(now())
+  options    CustomOption[]
+}
+
+model CustomOption {
+  id             String       @id @default(auto()) @map("_id") @db.ObjectId
+  value          String
+  formquestion   FormQuestion @relation(fields: [formquestionId], references: [id])
+  formquestionId String       @db.ObjectId
+}
+
+// question section for intake from end 

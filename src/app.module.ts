@@ -6,7 +6,8 @@ import { AuthModule } from './auth/auth.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { UserModule } from './user/user.module';
 // import { ProviderModule } from './provider/provider.module';
-// import { CompanyModule } from './company/company.module';
+import { CompanyModule } from './company/company.module';
+import { QuestionModule } from './question/question.module';
 
 
 // import { ChatModule } from './chat/chat.module';
@@ -25,6 +26,8 @@ import { SubscriptionModule } from './subscription/subscription.module';
     PrismaModule,
     AuthModule,
     UserModule,
+    CompanyModule,
+    QuestionModule,
     // ProviderModule,
 
     // ChatModule,

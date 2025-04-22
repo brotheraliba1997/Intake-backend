@@ -48,8 +48,7 @@ export class JwtAuthGuard implements CanActivate {
         secret: process.env.JWT_SECRET,
       });
 
-      // console.log('payload==>', payload, payload.sub);
-      // const user = await this.userService.findOne(payload.id);
+      
 
       const user = payload;
       if (!user) {

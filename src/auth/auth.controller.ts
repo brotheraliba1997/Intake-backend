@@ -6,7 +6,6 @@ import {
   Get,
   InternalServerErrorException,
   BadRequestException,
-  
 } from '@nestjs/common';
 import { CurrentUser } from 'src/decorators/current-user.decorators';
 import { AuthService } from './auth.service';
@@ -37,32 +36,8 @@ export class AuthController {
   @Post('register')
   async register(@Body() registerDto: RegisterDto) {
     try {
-      // const { email, password } = registerDto;
-
-      // Check if user already exists
-      // const existingUser = await this.prisma.user.findUnique({
-      //   where: { email },
-      // });
-
-      // if (existingUser) {
-      //   throw new BadRequestException('User with this email already exists');
-      // }
-
-      // Hash the password
-      // const saltRounds = 10;
-      // const hashedPassword = await bcrypt.hash(password, saltRounds);
-
-      // Create a new user
-      // const newUser = await this.prisma.user.create({
-      //   data: {
-      //     email,
-      //     password: hashedPassword,
-      //     ...rest, // Include other fields
-      //   },
-      // });
       const newUser = await this.userService.create(registerDto);
 
-      // Return sanitized user (without the password)
       return this.userService.sanitizeUser(newUser);
     } catch (error) {
       throw new InternalServerErrorException(
@@ -75,7 +50,6 @@ export class AuthController {
   @Post('login')
   async login(@Body() loginDTO: LoginDto) {
     const user = await this.authService.findByLogin(loginDTO);
-
     const tokens = await this.authService.generateTokens(user);
     return {
       success: true,
@@ -143,10 +117,7 @@ export class AuthController {
 
     if (currentTime > expiryTime) {
       throw new BadRequestException('OTP is expired');
-    
     }
-
-   
 
     const token = await this.authService.signAccessToken({ email });
 
@@ -167,8 +138,4 @@ export class AuthController {
       message: 'Password is changed successfully',
     };
   }
-
- 
-
-  
 }

@@ -72,25 +72,19 @@ export class UserController {
 
     const createdUser: any = await this.usersService.create(createUserDto);
 
-    if (
-      user.role === 'admin' &&
-      createdUser.role === 'client' &&
-      createUserDto.doctorId
-    ) {
-      const data = {
-        participants: [createdUser.id, createUserDto.doctorId],
-        isGroup: false,
-        name: 'Personal Chat',
-      };
+    // if (
+    //   user.role === 'admin' &&
+    //   createdUser.role === 'client' &&
+    //   createUserDto.doctorId
+    // ) {
+    //   const data = {
+    //     participants: [createdUser.id, createUserDto.doctorId],
+    //     isGroup: false,
+    //     name: 'Personal Chat',
+    //   };
 
-      console.log(user.id, createUserDto.doctorId, 'user');
-
-      
-
-      
-
-      
-    }
+    //   console.log(user.id, createUserDto.doctorId, 'user');
+    // }
 
     return {
       status: 'success',
