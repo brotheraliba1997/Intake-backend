@@ -542,18 +542,28 @@ enum AppointmentStatus {
 // question section for intake from
 
 model Question {
-  id           String           @id @default(auto()) @map("_id") @db.ObjectId
-  title        String
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  title String
   type         InputTypeOption?
   options      Option[]
   FormQuestion FormQuestion[]
   SubQuestion  SubQuestion[]
+
+  coloum coloum[]
+}
+
+model coloum {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  title      String
+  Question   Question? @relation(fields: [questionId], references: [id])
+  questionId String?   @db.ObjectId
 }
 
 model Option {
   id            String          @id @default(auto()) @map("_id") @db.ObjectId
   title         String
-  type          InputTypeOption
+  show          Boolean
+  type          InputTypeOption?
   question      Question?       @relation(fields: [questionId], references: [id])
   questionId    String?         @db.ObjectId
   SubQuestion   SubQuestion?    @relation(fields: [subQuestionId], references: [id])
@@ -574,6 +584,10 @@ enum InputTypeOption {
   radio
   checkbox
   table
+  html
+  textarea
+  date
+  Signature
 }
 
 model Form {
@@ -590,7 +604,7 @@ model FormQuestion {
   question   Question?       @relation(fields: [questionId], references: [id])
   questionId String?         @db.ObjectId
   text       String
-  inputType  InputTypeOption
+  inputType  InputTypeOption?
   createdAt  DateTime        @default(now())
   options    CustomOption[]
 }
@@ -598,8 +612,8 @@ model FormQuestion {
 model CustomOption {
   id             String       @id @default(auto()) @map("_id") @db.ObjectId
   value          String
-  formquestion   FormQuestion @relation(fields: [formquestionId], references: [id])
-  formquestionId String       @db.ObjectId
+  formquestion   FormQuestion? @relation(fields: [formquestionId], references: [id])
+  formquestionId String?       @db.ObjectId
 }
 
 // question section for intake from end 

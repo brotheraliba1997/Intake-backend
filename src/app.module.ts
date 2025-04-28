@@ -16,6 +16,7 @@ import { NotificationModule } from './notification/notification.module';
 
 // import { MeetingRoomModule } from './meetingRoom/meetingRoom.module';
 import { SubscriptionModule } from './subscription/subscription.module';
+import { FormModule } from './form/form.module';
 
 // import { UserSessionModule } from './userSession/userSession.module';
 
@@ -34,6 +35,8 @@ import { SubscriptionModule } from './subscription/subscription.module';
    
     NotificationModule,
     SubscriptionModule,
+    FormModule,
+    
 
 
     // UserSessionModule,

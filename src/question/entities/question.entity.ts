@@ -14,6 +14,10 @@ export enum InputTypeOption {
   text = 'text',
   radio = 'radio',
   checkbox = 'checkbox',
+  textarea = 'textarea',
+  table = 'table',
+  html = 'html',
+  date = 'date',
 }
 
 export class Question {

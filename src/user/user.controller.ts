@@ -171,9 +171,7 @@ export class UserController {
     //     await this.deviceReadingService.getClientDeviceReadings({
     //       clientId,
     //     });
-
     //   console.log(deviceReadings, 'deviceReadings');
-
     //   return {
     //     status: 'success',
     //     message: 'Device readings fetched successfully',
