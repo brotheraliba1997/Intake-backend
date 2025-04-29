@@ -61,7 +61,37 @@ export class QuestionController {
     @Res() response: Response,
   ) {
     try {
+      const newQuestions = await this.QuestionService.insertMultipleQuestions(response);
+      console.log(newQuestions)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+
+  @Post("form")
+  // @Roles('admin')
+  async  demiform(
+    @Body() createQuestionDto: any,
+    @Res() response: Response,
+  ) {
+    try {
       const newQuestions = await this.QuestionService.insertMultipleForm(response);
+      console.log(newQuestions)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+
+  @Post("fifty")
+  // @Roles('admin')
+  async  last50Records(
+    @Body() createQuestionDto: any,
+    @Res() response: Response,
+  ) {
+    try {
+      const newQuestions = await this.QuestionService.lastFiftyRecords(response);
       console.log(newQuestions)
     } catch (error) {
       console.log(error)
