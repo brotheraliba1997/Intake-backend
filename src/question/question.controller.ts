@@ -37,22 +37,6 @@ export class QuestionController {
     return this.QuestionService.getquestion(query);
   }
 
-  // Service method to insert data
-  // async insertFormData() {
-  //   const newForm = await this.prisma.question.create({
-  //     data: {
-
-  //         {
-  //           title: 'Name',
-  //           type: 'text', // Question type
-  //         },
-
-  //     },
-  //   });
-
-  //   return newForm;
-  // }
-
 
    @Post()
   // @Roles('admin')
@@ -109,11 +93,11 @@ export class QuestionController {
   //   return this.QuestionService.create(createQuestionDto, response);
   // }
 
-  // @Get(':id')
-  // @Roles('admin')
-  // getQuestion(@Param('id') id: string, @Res() response: Response) {
-  //   return this.QuestionService.getquestionById(id, response);
-  // }
+  @Get(':id')
+  @Roles('admin')
+  getQuestion(@Param('id') id: string, @Res() response: Response) {
+    return this.QuestionService.getquestionById(id, response);
+  }
 
   // @Put(':id')
   // @Roles('admin')

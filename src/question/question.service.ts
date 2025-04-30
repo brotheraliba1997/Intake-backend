@@ -98,485 +98,7 @@ export class QuestionService {
   // }
 
   async insertMultipleQuestions(response) {
-    const questionData = [
-      {
-        title: 'Name',
-        type: 'text',
-      },
-      {
-        title: 'Date of birth',
-        type: 'date',
-      },
-      {
-        title: 'Date of Self-Management Assessment development:',
-        type: 'text',
-      },
-      {
-        title: 'For the annual period from:',
-        type: 'text',
-      },
-      {
-        title: 'Name and title of person completing the review:',
-        type: 'text',
-      },
-      {
-        title:
-          'Health and medical needs to maintain or improve physical, mental, and emotional well-being',
-        type: 'table',
-        coloum: [
-          {
-            title: 'Assessment area',
-          },
-          {
-            title: 'Is the person able to self-manage in this area?',
-          },
-          {
-            title:
-              'Assessment - include information about the person that is descriptive of their overall strengths, functional skills and abilities, and behaviors or symptoms',
-          },
-        ],
-        subQuestion: [
-          {
-            title: 'Allergies (state specific allergies):',
-            type: 'checkbox',
-            options: [
-              {
-                title: 'Yes',
-                show: true,
-              },
-              {
-                title: 'No',
-                show: true,
-              },
-              {
-                title: 'NA - there are no allergies',
-                show: true,
-              },
-            ],
-          },
-          {
-            title: 'Seizures (state specific seizure types):',
-            type: 'checkbox',
-            options: [
-              {
-                title: 'Yes',
-                show: true,
-              },
-              {
-                title: 'No',
-                show: true,
-              },
-              {
-                title: 'NA - there are no allergies',
-                show: true,
-              },
-            ],
-          },
-          {
-            title: 'Choking',
-            type: 'checkbox',
-            options: [
-              {
-                title: 'Yes',
-                show: true,
-              },
-              {
-                title: 'No',
-                show: true,
-              },
-              {
-                title: 'NA - there are no allergies',
-                show: true,
-              },
-            ],
-          },
-          {
-            title: 'Special dietary needs (state specific need):',
-            type: 'checkbox',
-            options: [
-              {
-                title: 'Yes',
-                show: true,
-              },
-              {
-                title: 'No',
-                show: true,
-              },
-              {
-                title: 'NA – there are no special dietary needs',
-                show: true,
-              },
-            ],
-          },
-          {
-            title: 'Chronic medical conditions (state condition):',
-            type: 'checkbox',
-            options: [
-              {
-                title: 'Yes',
-                show: true,
-              },
-              {
-                title: 'No',
-                show: true,
-              },
-              {
-                title: 'NA - there are no chronic medical conditions',
-                show: true,
-              },
-            ],
-          },
-          {
-            title: 'Self-administration of medication or treatment orders',
-            type: 'checkbox',
-            options: [
-              {
-                title: 'Yes',
-                show: true,
-              },
-              {
-                title: 'No',
-                show: true,
-              },
-            ],
-          },
-          {
-            title: 'Preventative screening',
-            type: 'checkbox',
-            options: [
-              {
-                title: 'Yes',
-                show: true,
-              },
-              {
-                title: 'No',
-                show: true,
-              },
-            ],
-          },
-          {
-            title: 'Medical and dental appointments',
-            type: 'checkbox',
-            options: [
-              {
-                title: 'Yes',
-                show: true,
-              },
-              {
-                title: 'No',
-                show: true,
-              },
-              {
-                title: '',
-                show: true,
-              },
-            ],
-          },
-          {
-            title: 'Other health and medical needs (state specific need):',
-            type: 'checkbox',
-            options: [
-              {
-                title: 'Yes',
-                show: true,
-              },
-              {
-                title: 'No',
-                show: true,
-              },
-              {
-                title: 'NA',
-                show: true,
-              },
-            ],
-          },
-        ],
-      },
-      {
-        title:
-          'Personal safety to avoid injury or accident in the service setting',
-        type: 'table',
-        coloum: [
-          {
-            title: 'Assessment area',
-          },
-          {
-            title: 'Is the person able to self-manage in this area?',
-          },
-          {
-            title:
-              'Assessment - include information about the person that is descriptive of their overall strengths, functional skills and abilities, and behaviors or symptoms',
-          },
-        ],
-        subQuestion: [
-          {
-            title: 'Risk of falling (include the specific risk):',
-            type: 'checkbox',
-            options: [
-              {
-                title: 'Yes',
-                show: true,
-              },
-              {
-                title: 'No',
-                show: true,
-              },
-              {
-                title: 'NA - there are no allergies',
-                show: true,
-              },
-            ],
-          },
-          {
-            title: 'Mobility issues (include the specific issue):',
-            type: 'checkbox',
-            options: [
-              {
-                title: 'Yes',
-                show: true,
-              },
-              {
-                title: 'No',
-                show: true,
-              },
-              {
-                title: 'NA - there are no allergies',
-                show: true,
-              },
-            ],
-          },
-          {
-            title: 'Regulating water temperature',
-            type: 'checkbox',
-            options: [
-              {
-                title: 'Yes',
-                show: true,
-              },
-              {
-                title: 'No',
-                show: true,
-              },
-            ],
-          },
-          {
-            title: 'Community survival skills',
-            type: 'checkbox',
-            options: [
-              {
-                title: 'Yes',
-                show: true,
-              },
-              {
-                title: 'No',
-                show: true,
-              },
-            ],
-          },
-          {
-            title: 'Water safety skills',
-            type: 'checkbox',
-            options: [
-              {
-                title: 'Yes',
-                show: true,
-              },
-              {
-                title: 'No',
-                show: true,
-              },
-            ],
-          },
-          {
-            title: 'Sensory disabilities',
-            type: 'checkbox',
-            options: [
-              {
-                title: 'Yes',
-                show: true,
-              },
-              {
-                title: 'No',
-                show: true,
-              },
-              {
-                title: 'NA',
-                show: true,
-              },
-            ],
-          },
-        ],
-      },
-      {
-        title:
-          'Symptoms or behavior that may otherwise result in an incident as defined in section 245D.02, subd. 11 clauses (4) to (7) or suspension or termination of services by the license holder, or other symptoms or behaviors that may jeopardize the health and safety of the person or others.',
-        type: 'table',
-        coloum: [
-          {
-            title: 'Assessment area',
-          },
-          {
-            title: 'Is the person able to self-manage in this area?',
-          },
-          {
-            title:
-              'Assessment - include information about the person that is descriptive of their overall strengths, functional skills and abilities, and behaviors or symptoms',
-          },
-        ],
-        subQuestion: [
-          {
-            title: 'Self-injurious behaviors (state behavior):',
-            type: 'checkbox',
-            options: [
-              {
-                title: 'Yes',
-                show: true,
-              },
-              {
-                title: 'No',
-                show: true,
-              },
-              {
-                title: 'NA - there are no allergies',
-                show: true,
-              },
-            ],
-          },
-          {
-            title: 'Physical aggression/conduct (state behavior):',
-            type: 'checkbox',
-            options: [
-              {
-                title: 'Yes',
-                show: true,
-              },
-              {
-                title: 'No',
-                show: true,
-              },
-              {
-                title: 'NA - there are no allergies',
-                show: true,
-              },
-            ],
-          },
-          {
-            title: 'Verbal/emotional aggression (state behavior):',
-            type: 'checkbox',
-            options: [
-              {
-                title: 'NA - there are no allergies',
-                show: true,
-              },
-            ],
-          },
-          {
-            title: 'Property destruction (state behavior):',
-            type: 'checkbox',
-            options: [
-              {
-                title: 'Yes',
-                show: true,
-              },
-              {
-                title: 'No',
-                show: true,
-              },
-            ],
-          },
-          {
-            title: 'Suicidal ideations, thoughts, or attempts',
-            type: 'checkbox',
-            options: [
-              {
-                title: 'Yes',
-                show: true,
-              },
-              {
-                title: 'No',
-                show: true,
-              },
-            ],
-          },
-          {
-            title: 'Criminal or unlawful behavior',
-            type: 'checkbox',
-            options: [
-              {
-                title: 'Yes',
-                show: true,
-              },
-              {
-                title: 'No',
-                show: true,
-              },
-            ],
-          },
-        ],
-      },
-      {
-        title: 'SIGNATURE PAGE',
-        type: 'Signature',
-        subQuestion: [
-          {
-            title:
-              'By signing below, I am indicating the completion and approval of the Self-Management Assessment.',
-            options: [
-              {
-                title: 'Person served:',
-                type: 'text',
-              },
-              {
-                title: 'Date',
-                type: 'date',
-              },
-              {
-                title: 'Legal representative:',
-                type: 'text',
-              },
-              {
-                title: 'Date',
-                type: 'date',
-              },
-              {
-                title: 'Case manager:',
-                type: 'text',
-              },
-              {
-                title: 'Date',
-                type: 'date',
-              },
-              {
-                title: 'Licensed provider contact:',
-                type: 'text',
-              },
-              {
-                title: 'Date',
-                type: 'date',
-              },
-              {
-                title: 'Other support team member (name and title):',
-                type: 'text',
-              },
-              {
-                title: 'Date',
-                type: 'date',
-              },
-            ],
-          },
-        ],
-      },
-      {
-        title:
-          '<b> Please note: </b> <p> Within 20 working days of the 45-day planning meeting... </p>',
-        type: 'html',
-      },
-      {
-        title:
-          'Within the scope of services to this person, the license holder must assess, at a minimum, the areas included on this document.',
-        type: 'html',
-      },
-    ];
+    const questionData = [' wrong'];
 
     // Create a list of promises for each question insert operation
     const insertPromises = questionData?.map(async (question: any) => {
@@ -589,7 +111,7 @@ export class QuestionService {
             options: { create: question.options },
             SubQuestion: question.subQuestion
               ? { create: question.subQuestion }
-              : undefined, 
+              : undefined,
             coloum: question.coloum ? { create: question.coloum } : undefined, // <-- Options bhi top pe nahi hain
           },
           include: {
@@ -606,13 +128,12 @@ export class QuestionService {
               ? {
                   create: question.subQuestion.map((subQ: any) => ({
                     title: subQ.title,
-                    type: subQ.type,
+                    // type: subQ.type,
                     options: subQ.options
                       ? {
                           create: subQ.options.map((opt: any) => ({
                             title: opt.title,
                             show: opt.show ? opt.show : false,
-                         
                           })),
                         }
                       : undefined,
@@ -666,50 +187,9 @@ export class QuestionService {
 
   async insertMultipleForm(response) {
     const formData = {
-      title:
-        'Residency Agreement Template for Foster Care and Supported Living Services (SLS) under the BI, CAC, CADI and DD waivers',
+      title: ' wrong',
 
-      questions: [
-        {
-          questionId: '6811092aef93121f40f8e145',
-        },
-        {
-          questionId: '6811092aef93121f40f8e14c',
-        },
-        {
-          questionId: '6811092aef93121f40f8e148',
-        },
-        {
-          questionId: '6811092aef93121f40f8e149',
-        },
-        {
-          questionId: '6811092aef93121f40f8e143',
-        },
-        {
-          questionId: '6811092aef93121f40f8e146',
-        },
-        {
-          questionId: '6811092aef93121f40f8e151',
-        },
-        {
-          questionId: '6811092aef93121f40f8e147',
-        },
-        {
-          questionId: '6811092aef93121f40f8e144',
-        },
-        {
-          questionId: '6811092aef93121f40f8e14a',
-        },
-        {
-          questionId: '6811092aef93121f40f8e14b',
-        },
-        {
-          questionId: '6811092aef93121f40f8e15c',
-        },
-        {
-          questionId: '6811092aef93121f40f8e14d',
-        },
-      ],
+      questions: ['worng'],
     };
 
     const title = formData.title;
@@ -757,8 +237,26 @@ export class QuestionService {
 
   async getquestionById(id: string, response): Promise<any> {
     try {
-      const question = await this.prisma.question.findUnique({
+      const question = await this.prisma.form.findUnique({
         where: { id },
+
+        include: {
+          questions: {
+            include: {
+              question: {
+                include: {
+                  options: true,
+                  SubQuestion: {
+                    include: {
+                      options: true,
+                    },
+                  },
+                  coloum: true,
+                },
+              },
+            },
+          },
+        },
       });
       return response.status(200).send({
         data: question,
@@ -798,6 +296,7 @@ export class QuestionService {
         take: parsedLimit,
         include: {
           options: true,
+          SubQuestion: true,
         },
       }),
       this.prisma.question.count({ where }),
