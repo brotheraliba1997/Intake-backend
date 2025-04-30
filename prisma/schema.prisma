@@ -652,7 +652,7 @@ model Answer {
   optionId String? @db.ObjectId
 
   value     String? // text, textarea, html, etc.
-
+  multipleValue  Json
   type  String
 }
 
