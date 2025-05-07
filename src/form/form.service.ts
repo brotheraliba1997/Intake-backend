@@ -47,13 +47,48 @@ export class FormService {
   //   };
   // }
 
-  async getForms(): Promise<any> {
+  async getOneForms(id: string): Promise<any> {
     const result = await this.prisma.form.findUnique({
       where: {
-        id: '680f5940fd9a5286f90ffa1c', // Is ID ke liye record fetch karo
+        id: id, // Is ID ke liye record fetch karo
       },
     });
 
     return result;
+  }
+
+  async getAllForms(id: string, response): Promise<any> {
+    const result = await this.prisma.form.findMany({
+      include: {
+        questions: {
+          include: {
+            question: {
+              include: {
+                options: true,
+                SubQuestion: {
+                  include: {
+                    options: true,
+                  },
+                },
+                coloum: true,
+              },
+            },
+          },
+        },
+      },
+    });
+    try {
+      return response.status(200).send({
+        status: 'success',
+        message: 'Company created successfully',
+        data: result,
+      });
+    } catch (error) {
+      return response.status(422).send({
+        status: 'error',
+        message: 'Something went wrong while creating account',
+        meta: error.message,
+      });
+    }
   }
 }

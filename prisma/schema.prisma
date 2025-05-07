@@ -248,6 +248,19 @@ model ScheduledMeeting {
 //   COMPLETED
 // }
 
+enum PlanTypeEnum {
+  MONTHLY
+  YEARLY
+}
+
+model Plan {
+  id        String       @id @default(auto()) @map("_id") @db.ObjectId
+  PlanType  PlanTypeEnum
+  Summary   String
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+}
+
 model RepeatDay {
   id String @id @default(auto()) @map("_id") @db.ObjectId
 
@@ -572,8 +585,9 @@ model Option {
   SubQuestion   SubQuestion?     @relation(fields: [subQuestionId], references: [id])
   subQuestionId String?          @db.ObjectId
 
-  questionTestId String?  @db.ObjectId
-  Answer         Answer[]
+  questionTestId String? @db.ObjectId
+
+  multipleValues MultipleValues[]
 }
 
 model SubQuestion {
@@ -648,12 +662,18 @@ model Answer {
   subQuestion   SubQuestion? @relation(fields: [subQuestionId], references: [id])
   subQuestionId String?      @db.ObjectId
 
-  option   Option? @relation(fields: [optionId], references: [id])
-  optionId String? @db.ObjectId
-
-  value     String? // text, textarea, html, etc.
-  multipleValue  Json
-  type  String
+  value         String? // text, textarea, html, etc.
+  multipleValues MultipleValues[]
+  type          String
+  signatureLink String?
 }
 
-
+model MultipleValues {
+  id         String  @id @default(auto()) @map("_id") @db.ObjectId
+  Option     Option? @relation(fields: [OptionId], references: [id])
+  OptionId   String? @db.ObjectId
+  otherValue String?
+  Answer     Answer? @relation(fields: [answerId], references: [id])
+  answerId   String? @db.ObjectId
+  @@map("multipleValues")
+}

@@ -53,7 +53,7 @@ export class CompanyController {
   }
 
   @Get()
-  @Roles('super_admin')
+  // @Roles('super_admin')
   getAllCompanies(@Query() query: GetCompaniesDto) {
     return this.companyService.getCompanies(query);
   }
