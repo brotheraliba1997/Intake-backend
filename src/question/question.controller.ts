@@ -20,9 +20,10 @@ import { Roles } from 'src/decorators/roles.decorators';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { InputTypeOption } from '@prisma/client';
+import { Public } from 'src/decorators/public-route.decorators';
 
 @Controller('question')
-@ApiBearerAuth()
+@Public()
 
 // @UseGuards(JwtAuthGuard)
 export class QuestionController {
@@ -37,52 +38,70 @@ export class QuestionController {
     return this.QuestionService.getquestion(query);
   }
 
+  // @Public()
+  // @Get('ADMISSIONFORMANDDATASHEET')
+  // // @Roles('admin')
+  // ADMISSIONFORMANDDATASHEET() {
+  //   return this.QuestionService.ADMISSIONFORMANDDATASHEET();
+  // }
 
-   @Post()
+
+  // @Public()
+  // @Get('IndividualAbusePreventionPlan')
+  // // @Roles('admin')
+  // IndividualAbusePreventionPlan() {
+  //   return this.QuestionService.IndividualAbusePreventionPlan();
+  // }
+
+
+   @Public()
+  @Get('SELFMANAGEMENTASSESSMENT')
   // @Roles('admin')
-  async  demiQuestion(
+  SELFMANAGEMENTASSESSMENT() {
+    return this.QuestionService.SELFMANAGEMENTASSESSMENT();
+  }
+
+  @Post()
+  // @Roles('admin')
+  async demiQuestion(
     @Body() createQuestionDto: any,
     @Res() response: Response,
   ) {
     try {
-      const newQuestions = await this.QuestionService.insertMultipleQuestions(response);
-      console.log(newQuestions)
+      const newQuestions =
+        await this.QuestionService.insertMultipleQuestions(response);
+      console.log(newQuestions);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 
-
-  @Post("form")
+  @Post('form')
   // @Roles('admin')
-  async  demiform(
+  async demiform(@Body() createQuestionDto: any, @Res() response: Response) {
+    try {
+      const newQuestions =
+        await this.QuestionService.insertMultipleForm(response);
+      console.log(newQuestions);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  @Post('fifty')
+  // @Roles('admin')
+  async last50Records(
     @Body() createQuestionDto: any,
     @Res() response: Response,
   ) {
     try {
-      const newQuestions = await this.QuestionService.insertMultipleForm(response);
-      console.log(newQuestions)
+      const newQuestions =
+        await this.QuestionService.lastFiftyRecords(response);
+      console.log(newQuestions);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
-
-
-  @Post("fifty")
-  // @Roles('admin')
-  async  last50Records(
-    @Body() createQuestionDto: any,
-    @Res() response: Response,
-  ) {
-    try {
-      const newQuestions = await this.QuestionService.lastFiftyRecords(response);
-      console.log(newQuestions)
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
- 
 
   // @Post()
   // @Roles('admin')

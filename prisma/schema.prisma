@@ -555,11 +555,11 @@ enum AppointmentStatus {
 // question section for intake from
 
 model Question {
-  id           String           @id @default(auto()) @map("_id") @db.ObjectId
+  id           String          @id @default(auto()) @map("_id") @db.ObjectId
   title        String
-  type         InputTypeOption?
+  type         InputTypeOption @default(text)
   options      Option[]
-  FormQuestion FormQuestion[]
+  formQuestions FormQuestion[]
   SubQuestion  SubQuestion[]
 
   coloum coloum[]
@@ -567,23 +567,24 @@ model Question {
 }
 
 model coloum {
-  id         String    @id @default(auto()) @map("_id") @db.ObjectId
-  title      String
-  Question   Question? @relation(fields: [questionId], references: [id])
-  questionId String?   @db.ObjectId
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  Question    Question? @relation(fields: [questionId], references: [id])
+  questionId  String?   @db.ObjectId
+  arrangement Int?
 
   questionTestId String? @db.ObjectId
 }
 
 model Option {
-  id            String           @id @default(auto()) @map("_id") @db.ObjectId
+  id            String          @id @default(auto()) @map("_id") @db.ObjectId
   title         String
   show          Boolean
-  type          InputTypeOption?
-  question      Question?        @relation(fields: [questionId], references: [id])
-  questionId    String?          @db.ObjectId
-  SubQuestion   SubQuestion?     @relation(fields: [subQuestionId], references: [id])
-  subQuestionId String?          @db.ObjectId
+  type          InputTypeOption @default(text)
+  question      Question?       @relation(fields: [questionId], references: [id])
+  questionId    String?         @db.ObjectId
+  SubQuestion   SubQuestion?    @relation(fields: [subQuestionId], references: [id])
+  subQuestionId String?         @db.ObjectId
 
   questionTestId String? @db.ObjectId
 
@@ -591,12 +592,15 @@ model Option {
 }
 
 model SubQuestion {
-  id             String    @id @default(auto()) @map("_id") @db.ObjectId
-  question       Question? @relation(fields: [subQuestionId], references: [id])
-  subQuestionId  String?   @db.ObjectId
-  title          String
-  options        Option[]
-  questionTestId String?   @db.ObjectId
+  id         String          @id @default(auto()) @map("_id") @db.ObjectId
+  question   Question?       @relation(fields: [questionId], references: [id])
+  questionId String?         @db.ObjectId
+  title      String
+  type       InputTypeOption @default(text)
+
+  options     Option[]
+  // questionTestId String?  @db.ObjectId
+  arrangement Int?
 
   Answer Answer[]
 }
@@ -617,20 +621,21 @@ model Form {
   id               String             @id @default(auto()) @map("_id") @db.ObjectId
   title            String
   createdAt        DateTime           @default(now())
-  questions        FormQuestion[] // linked questions
+  formQuestions        FormQuestion[] // linked questions
   AnswerSubmission AnswerSubmission[]
 }
 
 model FormQuestion {
-  id         String           @id @default(auto()) @map("_id") @db.ObjectId
-  form       Form             @relation(fields: [formId], references: [id])
-  formId     String           @db.ObjectId
-  question   Question?        @relation(fields: [questionId], references: [id])
-  questionId String?          @db.ObjectId
-  title      String?
-  type       InputTypeOption?
-  createdAt  DateTime         @default(now())
-  options    CustomOption[]
+  id          String           @id @default(auto()) @map("_id") @db.ObjectId
+  form        Form             @relation(fields: [formId], references: [id])
+  formId      String           @db.ObjectId
+  question    Question?       @relation(fields: [questionId], references: [id])
+  questionId  String?          @db.ObjectId
+  title       String?
+  type        InputTypeOption?
+  createdAt   DateTime         @default(now())
+  options     CustomOption[]
+  arrangement Int?
 
   questionTestId String? @db.ObjectId
 }
@@ -662,10 +667,10 @@ model Answer {
   subQuestion   SubQuestion? @relation(fields: [subQuestionId], references: [id])
   subQuestionId String?      @db.ObjectId
 
-  value         String? // text, textarea, html, etc.
+  value          String? // text, textarea, html, etc.
   multipleValues MultipleValues[]
-  type          String
-  signatureLink String?
+  type           String
+  signatureLink  String?
 }
 
 model MultipleValues {
@@ -675,5 +680,6 @@ model MultipleValues {
   otherValue String?
   Answer     Answer? @relation(fields: [answerId], references: [id])
   answerId   String? @db.ObjectId
+
   @@map("multipleValues")
 }

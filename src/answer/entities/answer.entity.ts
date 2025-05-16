@@ -24,9 +24,9 @@ class AnswerItemDto {
   signatureLink?: string;
 
   @ApiProperty({  required: true })
-  @IsNotEmpty()
+  @IsOptional()
   @IsArray()
-  multipleValues: string[];
+  multipleValues?: string[];
 
   @ApiProperty()
   @IsString()

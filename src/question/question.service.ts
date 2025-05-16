@@ -5,6 +5,7 @@ import { paginate } from 'src/common/pagination/paginate';
 import { UpdateQuestionDto } from './dto/update-question.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { QuestionPaginator } from './dto/get-question.dto';
+import { Prisma } from '@prisma/client';
 // import { questionPaginator, GetquestionDto } from './dto/get-question.dto';
 
 @Injectable()
@@ -241,7 +242,7 @@ export class QuestionService {
         where: { id },
 
         include: {
-          questions: {
+          formQuestions: {
             include: {
               question: {
                 include: {
@@ -342,6 +343,1365 @@ export class QuestionService {
           error.message ||
           'An unexpected error occurred while deleting the question.',
       });
+    }
+  }
+
+  async ADMISSIONFORMANDDATASHEET() {
+    console.log('chal raha hai');
+    const formId = '6811022f1860b38942a32a92';
+    const questions = [
+      {
+        title:
+          '*This form is completed at service initiation and updated as needed. Dated signatures are obtained at initiation and with changes.',
+        type: 'html',
+      },
+
+      {
+        title: 'PERSONAL INFORMATION ',
+        type: 'html',
+        subQuestion: [
+          {
+            title: 'Name',
+            type: 'text',
+          },
+          { title: 'Date of birth', type: 'date' },
+          {
+            title: 'Address:',
+            type: 'text',
+          },
+          { title: 'Home telephone number: ', type: 'text' },
+          {
+            title: 'Cell phone number:  ',
+            type: 'text',
+          },
+
+          {
+            title: 'Email address:',
+            type: 'text',
+          },
+
+          {
+            title: 'Date of admission or re-admission:',
+            type: 'text',
+          },
+
+          {
+            title: 'Language(s) spoken:',
+            type: 'text',
+          },
+
+          {
+            title: 'Guardianship type (self, private, public): ',
+            type: 'text',
+          },
+
+          {
+            title: 'Religious preference: ',
+            type: 'text',
+          },
+
+          {
+            title: 'Marital status: ',
+            type: 'text',
+          },
+
+          {
+            title: 'Other:  ',
+            type: 'text',
+          },
+        ],
+      },
+
+      {
+        title: 'IDENTIFYING CHARACTERISTICS',
+        type: 'html',
+        subQuestion: [
+          {
+            title: 'Gender:',
+            type: 'text',
+          },
+
+          {
+            title: 'Race: ',
+            type: 'text',
+          },
+
+          {
+            title: 'Height:',
+            type: 'text',
+          },
+
+          {
+            title: 'Weight:',
+            type: 'text',
+          },
+
+          {
+            title: 'Hair color: ',
+            type: 'text',
+          },
+
+          {
+            title: 'Eye color: ',
+            type: 'text',
+          },
+
+          {
+            title: 'Distinguishing characteristics/identifying marks: ',
+            type: 'text',
+          },
+        ],
+      },
+
+      {
+        title: 'FINANCIAL INFORMATION',
+        type: 'html',
+        subQuestion: [
+          {
+            title: 'Social Security Number (SSN):',
+            type: 'text',
+          },
+
+          {
+            title: 'Medical Assistance Number: ',
+            type: 'text',
+          },
+
+          {
+            title: 'County of responsibility:',
+            type: 'text',
+          },
+
+          {
+            title: 'County of financial responsibility: ',
+            type: 'text',
+          },
+
+          {
+            title: 'Burial account number:  ',
+            type: 'text',
+          },
+        ],
+      },
+
+      {
+        title: 'MEDICAL INFORMATION',
+        type: 'html',
+        subQuestion: [
+          {
+            title: 'Diagnoses:',
+            type: 'text',
+          },
+
+          {
+            title: 'Allergies: ',
+            type: 'text',
+          },
+
+          {
+            title: 'Protocols (seizure, diabetic, etc.):',
+            type: 'text',
+          },
+
+          {
+            title:
+              'Medical equipment, devices, or adaptive aides or technology used:  ',
+            type: 'text',
+          },
+
+          {
+            title: 'Specialized dietary needs:   ',
+            type: 'text',
+          },
+        ],
+      },
+
+      {
+        title: 'GENERAL CONTACT INFORMATION',
+        type: 'html',
+        subQuestion: [
+          {
+            title: 'Name:',
+            type: 'text',
+          },
+
+          {
+            title: 'Address and telephone numbers: ',
+            type: 'text',
+          },
+
+          {
+            title: 'Legal representative:',
+            type: 'text',
+          },
+
+          {
+            title: 'Authorized representative:',
+            type: 'text',
+          },
+
+          {
+            title: 'Primary emergency contact: ',
+            type: 'text',
+          },
+
+          {
+            title: 'Case manager:  ',
+            type: 'text',
+          },
+
+          {
+            title: 'Family member:   ',
+            type: 'text',
+          },
+
+          {
+            title: 'Other:  ',
+            type: 'text',
+          },
+
+          {
+            title: 'Financial worker:  ',
+            type: 'text',
+          },
+
+          {
+            title: 'Residential contact: ',
+            type: 'text',
+          },
+
+          {
+            title: 'Vocational contact:   ',
+            type: 'text',
+          },
+
+          {
+            title: 'Other service provider: ',
+            type: 'text',
+          },
+        ],
+      },
+
+      {
+        title: 'HEALTH-RELATED CONTACT INFORMATION',
+        type: 'html',
+        subQuestion: [
+          {
+            title: 'Name:',
+            type: 'text',
+          },
+
+          {
+            title: 'Address and telephone numbers: ',
+            type: 'text',
+          },
+
+          {
+            title: 'Primary health care professional: ',
+            type: 'text',
+          },
+
+          {
+            title: 'Psychiatrist:',
+            type: 'text',
+          },
+
+          {
+            title: 'Other mental health professional: ',
+            type: 'text',
+          },
+
+          {
+            title: 'Neurologist:  ',
+            type: 'text',
+          },
+
+          {
+            title: 'Dentist:    ',
+            type: 'text',
+          },
+
+          {
+            title: 'Optometrist/Ophthalmologist:  ',
+            type: 'text',
+          },
+
+          {
+            title: 'Audiologist:  ',
+            type: 'text',
+          },
+
+          {
+            title: 'Pharmacy:  ',
+            type: 'text',
+          },
+
+          {
+            title: 'Hospital of preference:',
+            type: 'text',
+          },
+
+          {
+            title: 'Other health professional:',
+            type: 'text',
+          },
+        ],
+      },
+    ];
+    try {
+      // const promissResult = await Promise.all(
+      //   questions.map(async (question, ind) => {
+      //     console.log(question.type, 'question');
+      //     const questionCreate = await this.prisma.question.create({
+      //       data: {
+      //         title: question.title,
+      //         type: 'text',
+      //         // SubQuestion: {
+      //         //   create: question.subQuestion?.map((sq, index) => {
+      //         //     console.log(sq.type, 'subQuestion');
+      //         //     return {
+      //         //       title: "hello",
+      //         //       type: 'text',
+      //         //       arrangement: index + 1,
+      //         //     };
+      //         //   }),
+      //         // },
+      //       },
+      //     });
+
+      //     const subquestionCreate = await this.prisma.question.createMany({
+      //       data: question.subQuestion?.map((items, indx) => ({
+      //         title: 'hello',
+      //         type: 'text',
+      //         // arrangement: indx + 1,
+      //         questionId: questionCreate?.id,
+      //       })),
+      //     });
+
+      //     const formQuestion = await this.prisma.formQuestion.create({
+      //       data: {
+      //         formId: formId,
+      //         questionId: questionCreate?.id,
+      //         arrangement: ind + 1,
+      //       },
+      //     });
+
+      //     // ✅ Explicitly return something
+      //     return {
+      //       questionId: questionCreate.id,
+      //       formQuestionId: formQuestion.id,
+      //     };
+      //   }),
+      // );
+
+      const promissResult = await Promise.all(
+        questions.map(async (question, ind) => {
+          const questionCreate = await this.prisma.question.create({
+            data: {
+              title: question.title,
+              type: question.type as any,
+              // type: 'html',
+            },
+          });
+
+          // ✅ Replace createMany with Promise.all to support relations
+          await Promise.all(
+            question.subQuestion?.map(async (sub, index) => {
+              return await this.prisma.subQuestion.create({
+                data: {
+                  title: sub.title ?? 'Untitled',
+                  type: sub.type as any,
+                  // type: 'text',
+
+                  arrangement: index + 1,
+                  questionId: questionCreate.id,
+                },
+              });
+            }) ?? [],
+          );
+
+          const formQuestion = await this.prisma.formQuestion.create({
+            data: {
+              formId: formId,
+              questionId: questionCreate.id,
+              arrangement: ind + 1,
+            },
+          });
+
+          return {
+            questionId: questionCreate.id,
+            formQuestionId: formQuestion.id,
+          };
+        }),
+      );
+
+      console.log(promissResult);
+
+      console.log(promissResult, 'promissResult');
+      return promissResult;
+    } catch (err) {
+      console.log(err, 'err');
+
+      return err;
+    }
+  }
+
+  async IndividualAbusePreventionPlan() {
+    console.log('chal raha hai');
+    const formId = '68110390a947763e84212cfb';
+
+    const questions = [
+      {
+        title: 'Signature',
+        type: 'html',
+        subQuestion: [
+          {
+            title: 'Signature',
+            type: 'text',
+          },
+          {
+            title: 'title',
+            type: 'text',
+          },
+          {
+            title: 'Date',
+            type: 'text',
+          },
+          {
+            title: 'Name',
+            type: 'text',
+          },
+        ],
+      },
+    ];
+
+    try {
+      const promissResult = await Promise.all(
+        questions.map(async (question, ind) => {
+          const questionCreate = await this.prisma.question.create({
+            data: {
+              title: question.title,
+              type: question.type as any,
+              // type: 'html',
+            },
+          });
+
+          // ✅ Replace createMany with Promise.all to support relations
+          await Promise.all(
+            question.subQuestion?.map(async (sub, index) => {
+              return await this.prisma.subQuestion.create({
+                data: {
+                  title: sub.title ?? 'Untitled',
+                  type: sub.type as any,
+                  // type: 'text',
+
+                  arrangement: index + 1,
+                  questionId: questionCreate.id,
+                },
+              });
+            }) ?? [],
+          );
+
+          const formQuestion = await this.prisma.formQuestion.create({
+            data: {
+              formId: formId,
+              questionId: questionCreate.id,
+              arrangement: ind + 1,
+            },
+          });
+
+          return {
+            questionId: questionCreate.id,
+            formQuestionId: formQuestion.id,
+          };
+        }),
+      );
+
+      console.log(promissResult);
+
+      console.log(promissResult, 'promissResult');
+      return promissResult;
+    } catch (err) {
+      console.log(err, 'err');
+
+      return err;
+    }
+  }
+
+  async SELFMANAGEMENTASSESSMENT() {
+    console.log('chal raha hai');
+    const formId = '68120d8a081cbb1f4e304240';
+
+    // const questions = [
+    //   {
+    //     title: 'Name',
+    //     type: 'text',
+    //   },
+    //   {
+    //     title: 'Date of birth',
+    //     type: 'date',
+    //   },
+
+    //   {
+    //     title: 'Date of Self-Management Assessment development:',
+    //     type: 'text',
+    //   },
+
+    //   {
+    //     title: 'For the annual period from:',
+    //     type: 'text',
+    //   },
+
+    //   {
+    //     title: 'Name and title of person completing the review:',
+    //     type: 'text',
+    //   },
+
+    //   {
+    //     title:
+    //       'Health and medical needs to maintain or improve physical, mental, and emotional well-being',
+    //     type: 'table',
+
+    //     coloum: [
+    //       { title: 'Assessment area ' },
+    //       { title: 'Is the person able to self-manage in this area?' },
+    //       {
+    //         title:
+    //           'Assessment - include information about the person that is descriptive of their overall strengths, functional skills and abilities, and behaviors or symptoms ',
+    //       },
+    //     ],
+
+    //     subQuestion: [
+    //       {
+    //         title: 'Allergies (state specific allergies): ',
+    //         type: 'checkbox',
+
+    //         options: [
+    //           {
+    //             title: 'Yes',
+    //           },
+
+    //           {
+    //             title: 'No ',
+    //           },
+    //           {
+    //             title: 'NA - there are no allergies',
+    //           },
+    //         ],
+    //       },
+
+    //       {
+    //         title: 'Seizures (state specific seizure types):  ',
+    //         type: 'checkbox',
+    //         options: [
+    //           {
+    //             title: 'Yes',
+    //           },
+
+    //           {
+    //             title: 'No ',
+    //           },
+    //           {
+    //             title: 'NA - there are no allergies',
+    //           },
+    //         ],
+    //       },
+
+    //       {
+    //         title: 'Choking',
+    //         type: 'checkbox',
+    //         options: [
+    //           {
+    //             title: 'Yes',
+    //           },
+
+    //           {
+    //             title: 'No ',
+    //           },
+    //           {
+    //             title: 'NA - there are no allergies',
+    //           },
+    //         ],
+    //       },
+
+    //       {
+    //         title: 'Special dietary needs (state specific need):',
+    //         type: 'checkbox',
+    //         options: [
+    //           {
+    //             title: 'Yes',
+    //           },
+
+    //           {
+    //             title: 'No',
+    //           },
+    //           {
+    //             title: 'NA – there are no special dietary needs ',
+    //           },
+    //         ],
+    //       },
+
+    //       {
+    //         title: 'Chronic medical conditions (state condition): ',
+    //         type: 'checkbox',
+
+    //         options: [
+    //           {
+    //             title: 'Yes',
+    //           },
+
+    //           {
+    //             title: 'No',
+    //           },
+    //           {
+    //             title: 'NA - there are no chronic medical conditions ',
+    //           },
+    //         ],
+    //       },
+
+    //       {
+    //         title: 'Self-administration of medication or treatment orders ',
+    //         type: 'checkbox',
+
+    //         options: [
+    //           {
+    //             title: 'Yes',
+    //           },
+
+    //           {
+    //             title: 'No',
+    //           },
+    //         ],
+    //       },
+
+    //       {
+    //         title: 'Preventative screening ',
+    //         type: 'checkbox',
+    //         options: [
+    //           {
+    //             title: 'Yes',
+    //           },
+
+    //           {
+    //             title: 'No',
+    //           },
+    //         ],
+    //       },
+
+    //       {
+    //         title: 'Medical and dental appointments',
+    //         type: 'checkbox',
+    //         options: [
+    //           {
+    //             title: 'Yes',
+    //           },
+
+    //           {
+    //             title: 'No',
+    //           },
+
+    //           {
+    //             title: '',
+    //           },
+    //         ],
+    //       },
+
+    //       {
+    //         title: 'Other health and medical needs (state specific need):',
+    //         type: 'checkbox',
+
+    //         options: [
+    //           {
+    //             title: 'Yes',
+    //           },
+
+    //           {
+    //             title: 'No',
+    //           },
+
+    //           {
+    //             title: 'NA',
+    //           },
+    //         ],
+    //       },
+
+    //       {
+    //         title: 'Other health and medical needs (state specific need):',
+    //         type: 'checkbox',
+
+    //         options: [
+    //           {
+    //             title: 'Yes',
+    //           },
+
+    //           {
+    //             title: 'No',
+    //           },
+
+    //           {
+    //             title: 'NA',
+    //           },
+    //         ],
+    //       },
+
+    //       {
+    //         title: 'Other health and medical needs (state specific need):',
+    //         type: 'checkbox',
+
+    //         options: [
+    //           {
+    //             title: 'Yes',
+    //           },
+
+    //           {
+    //             title: 'No',
+    //           },
+
+    //           {
+    //             title: 'NA',
+    //           },
+    //         ],
+    //       },
+
+    //       {
+    //         title: 'Other health and medical needs (state specific need):',
+    //         type: 'checkbox',
+
+    //         options: [
+    //           {
+    //             title: 'Yes',
+    //           },
+
+    //           {
+    //             title: 'No',
+    //           },
+
+    //           {
+    //             title: 'NA',
+    //           },
+    //         ],
+    //       },
+    //     ],
+    //   },
+
+    //   {
+    //     title:
+    //       'Personal safety to avoid injury or accident in the service setting',
+    //     type: 'table',
+
+    //     coloum: [
+    //       { title: 'Assessment area ' },
+    //       { title: 'Is the person able to self-manage in this area?' },
+    //       {
+    //         title:
+    //           'Assessment - include information about the person that is descriptive of their overall strengths, functional skills and abilities, and behaviors or symptoms ',
+    //       },
+    //     ],
+
+    //     subQuestion: [
+    //       {
+    //         title: 'Risk of falling (include the specific risk): ',
+    //         type: 'checkbox',
+    //         options: [
+    //           {
+    //             title: 'Yes',
+    //           },
+
+    //           {
+    //             title: 'No ',
+    //           },
+    //           {
+    //             title: 'NA - there are no allergies',
+    //           },
+    //         ],
+    //       },
+
+    //       {
+    //         title: 'Mobility issues (include the specific issue): ',
+    //         type: 'checkbox',
+    //         options: [
+    //           {
+    //             title: 'Yes',
+    //           },
+
+    //           {
+    //             title: 'No ',
+    //           },
+    //           {
+    //             title: 'NA - there are no allergies',
+    //           },
+    //         ],
+    //       },
+
+    //       {
+    //         title: '',
+    //         type: 'checkbox',
+    //         options: [
+    //           {
+    //             title: 'NA - there are no allergies',
+    //           },
+    //         ],
+    //       },
+
+    //       {
+    //         title: 'Regulating water temperature',
+    //         type: 'checkbox',
+
+    //         options: [
+    //           {
+    //             title: 'Yes',
+    //           },
+
+    //           {
+    //             title: 'No',
+    //           },
+    //         ],
+    //       },
+
+    //       {
+    //         title: 'Community survival skills',
+    //         type: 'checkbox',
+    //         options: [
+    //           {
+    //             title: 'Yes',
+    //           },
+
+    //           {
+    //             title: 'No',
+    //           },
+    //         ],
+    //       },
+
+    //       {
+    //         title: 'Water safety skills ',
+    //         type: 'checkbox',
+
+    //         options: [
+    //           {
+    //             title: 'Yes',
+    //           },
+
+    //           {
+    //             title: 'No',
+    //           },
+    //         ],
+    //       },
+
+    //       {
+    //         title: 'Sensory disabilities ',
+    //         type: 'checkbox',
+
+    //         options: [
+    //           {
+    //             title: 'Yes',
+    //           },
+
+    //           {
+    //             title: 'No',
+    //           },
+
+    //           {
+    //             title: 'NA',
+    //           },
+    //         ],
+    //       },
+
+    //       {
+    //         title: 'Other personal safety needs (state specific need):',
+    //         type: 'checkbox',
+
+    //         options: [
+    //           {
+    //             title: 'Yes',
+    //           },
+
+    //           {
+    //             title: 'No',
+    //           },
+
+    //           {
+    //             title: 'NA',
+    //           },
+    //         ],
+    //       },
+
+    //       {
+    //         title: 'Other personal safety needs (state specific need):',
+    //         type: 'checkbox',
+
+    //         options: [
+    //           {
+    //             title: 'Yes',
+    //           },
+
+    //           {
+    //             title: 'No',
+    //           },
+
+    //           {
+    //             title: 'NA',
+    //           },
+    //         ],
+    //       },
+
+    //       {
+    //         title: 'Other personal safety needs (state specific need):',
+    //         type: 'checkbox',
+
+    //         options: [
+    //           {
+    //             title: 'Yes',
+    //           },
+
+    //           {
+    //             title: 'No',
+    //           },
+
+    //           {
+    //             title: 'NA',
+    //           },
+    //         ],
+    //       },
+    //     ],
+    //   },
+
+    //   {
+    //     title:
+    //       'Symptoms or behavior that may otherwise result in an incident as defined in section 245D.02, subd. 11 clauses (4) to (7) or suspension or termination of services by the license holder, or other symptoms or behaviors that may jeopardize the health and safety of the person or others.',
+    //     type: 'table',
+
+    //     coloum: [
+    //       { title: 'Assessment area ' },
+    //       { title: 'Is the person able to self-manage in this area?' },
+    //       {
+    //         title:
+    //           'Assessment - include information about the person that is descriptive of their overall strengths, functional skills and abilities, and behaviors or symptoms ',
+    //       },
+    //     ],
+
+    //     subQuestion: [
+    //       {
+    //         title: 'Self-injurious behaviors (state behavior): ',
+    //         type: 'checkbox',
+
+    //         options: [
+    //           {
+    //             title: 'Yes',
+    //           },
+
+    //           {
+    //             title: 'No ',
+    //           },
+    //           {
+    //             title: 'NA - there are no allergies',
+    //           },
+    //         ],
+    //       },
+
+    //       {
+    //         title: 'Physical aggression/conduct (state behavior):  ',
+    //         type: 'checkbox',
+
+    //         options: [
+    //           {
+    //             title: 'Yes',
+    //           },
+
+    //           {
+    //             title: 'No ',
+    //           },
+    //           {
+    //             title: 'NA - there are no allergies',
+    //           },
+    //         ],
+    //       },
+
+    //       {
+    //         title: 'Verbal/emotional aggression (state behavior):',
+    //         type: 'checkbox',
+
+    //         options: [
+    //           {
+    //             title: 'NA - there are no allergies',
+    //           },
+    //         ],
+    //       },
+
+    //       {
+    //         title: 'Property destruction (state behavior):',
+    //         type: 'checkbox',
+
+    //         options: [
+    //           {
+    //             title: 'Yes',
+    //           },
+
+    //           {
+    //             title: 'No',
+    //           },
+    //         ],
+    //       },
+
+    //       {
+    //         title: 'Suicidal ideations, thoughts, or attempts',
+    //         type: 'checkbox',
+
+    //         options: [
+    //           {
+    //             title: 'Yes',
+    //           },
+
+    //           {
+    //             title: 'No',
+    //           },
+    //         ],
+    //       },
+
+    //       {
+    //         title: 'Criminal or unlawful behavior',
+    //         type: 'checkbox',
+
+    //         options: [
+    //           {
+    //             title: 'Yes',
+    //           },
+
+    //           {
+    //             title: 'No',
+    //           },
+    //         ],
+    //       },
+
+    //       {
+    //         title: 'Sensory disabilities ',
+    //         type: 'checkbox',
+
+    //         options: [
+    //           {
+    //             title: 'Yes',
+    //           },
+
+    //           {
+    //             title: 'No',
+    //           },
+
+    //           {
+    //             title: 'NA',
+    //           },
+    //         ],
+    //       },
+
+    //       {
+    //         title:
+    //           'Mental or emotional health symptoms and crises (state diagnosis): ',
+    //         type: 'checkbox',
+
+    //         options: [
+    //           {
+    //             title: 'Yes',
+    //           },
+
+    //           {
+    //             title: 'No',
+    //           },
+
+    //           {
+    //             title: 'NA',
+    //           },
+    //         ],
+    //       },
+
+    //       {
+    //         title: 'Unauthorized or unexplained absence from a program',
+    //         type: 'checkbox',
+
+    //         options: [
+    //           {
+    //             title: 'Yes',
+    //           },
+
+    //           {
+    //             title: 'No',
+    //           },
+
+    //           {
+    //             title: 'NA',
+    //           },
+    //         ],
+    //       },
+
+    //       {
+    //         title:
+    //           'An act or situation involving a person that requires the program to call 911, law enforcement or fire department',
+    //         type: 'checkbox',
+
+    //         options: [
+    //           {
+    //             title: 'Yes',
+    //           },
+
+    //           {
+    //             title: 'No',
+    //           },
+
+    //           {
+    //             title: 'NA',
+    //           },
+    //         ],
+    //       },
+
+    //       {
+    //         title: 'Other symptom or behavior (be specific): ',
+    //         type: 'checkbox',
+
+    //         options: [
+    //           {
+    //             title: 'Yes',
+    //           },
+
+    //           {
+    //             title: 'No',
+    //           },
+
+    //           {
+    //             title: 'NA',
+    //           },
+    //         ],
+    //       },
+    //     ],
+    //   },
+
+    //   {
+    //     title: 'SIGNATURE PAGE',
+    //     type: 'Signature',
+
+    //     subQuestion: [
+    //       {
+    //         title:
+    //           'By signing below, I am indicating the completion and approval of the Self-Management Assessment.',
+    //         options: [
+    //           {
+    //             title: 'Person served:',
+    //             type: 'text',
+    //           },
+
+    //           {
+    //             title: 'Date ',
+    //             type: 'date',
+    //           },
+
+    //           {
+    //             title: 'Legal representative:',
+    //             type: 'text',
+    //           },
+
+    //           {
+    //             title: 'Date ',
+    //             type: 'date',
+    //           },
+
+    //           {
+    //             title: 'Case manager:',
+    //             type: 'text',
+    //           },
+
+    //           {
+    //             title: 'Date ',
+    //             type: 'date',
+    //           },
+
+    //           {
+    //             title: 'Licensed provider contact:',
+    //             type: 'text',
+    //           },
+
+    //           {
+    //             title: 'Date  ',
+    //             type: 'date',
+    //           },
+
+    //           {
+    //             title: 'Other support team member (name and title):',
+    //             type: 'text',
+    //           },
+
+    //           {
+    //             title: 'Date ',
+    //             type: 'date',
+    //           },
+
+    //           {
+    //             title: 'Other support team member (name and title):',
+    //             type: 'text',
+    //           },
+
+    //           {
+    //             title: 'Date  ',
+    //             type: 'date',
+    //           },
+    //         ],
+    //       },
+    //     ],
+    //   },
+
+    //   {
+
+    //     title:
+    //       '<b> Please note: </b> <p> Within 20 working days of the 45-day planning meeting (and within 10 working days of the service plan review meeting), the assessment and this addendum must be submitted to and dated signatures obtained dated by the person served and/or legal representative and case manager to document completion and approval. If within 10 working days of this submission, the person served and/or legal representative or case manager has not signed and returned to the license holder the assessment and Support Plan Addendum or has not proposed written modification to its submission, the submission is deemed approved and in effect. It will remain in effect until the next annual month or until the person served and/or legal representative or case manager submits a written request to revise them. </p><ul> <li>I may refuse to authorize the company to administer medication or treatment and that the company will not administer the medication</li></ul>',
+    //     type: 'html',
+    //   },
+
+    //   {
+
+    //     title:
+    //       'Within the scope of services to this person, the license holder must assess, at a minimum, the areas included on this document. Additional information on self-management may be included per request of the person served and/or legal representative and case manager. The Self-Management Assessment will be completed by the company’s designated staff person and will be done in consultation with the person and members of the support team.  <br> </br> The license holder will complete this assessment before the 45-day planning meeting and review it at the meeting. Within 20 working days of the 45-day meeting, dated signatures will be obtained from the person and/or legal representative and case manager to document the completion and approval of the Self-Management Assessment. At a minimum of annually, or within 30 days of a written request from the person and/or legal representative or case manager. This Self-Management Assessment will be reviewed by the support team or expanded support team as part of a service plan review and dated signatures obtained.  <br> </br>  Assessments must be based on the person’s status within the last 12 months at the time of service initiation. Assessments based on older information must be documented and justified. <br> </br>  The general and health-specific supports and outcomes necessary or desired to support the person based upon this assessment and the requirements of person centered planning and service delivery will be documented in the Support Plan Addendum.',
+    //     type: 'html',
+    //   },
+    // ];
+
+    const questions = [
+      {
+        title:
+          'By signing below, I am indicating the completion and approval of the Self-Management Assessment.',
+        type: 'html',
+        subQuestion: [
+          {
+            title: 'Person served:',
+            type: 'Signature',
+          },
+          {
+            title: 'Date',
+            type: 'date',
+          },
+          {
+            title: 'Legal representative:',
+            type: 'Signature',
+          },
+          {
+            title: 'Date',
+            type: 'date',
+          },
+
+          {
+            title: 'Case manager:',
+            type: 'Signature',
+          },
+
+          {
+            title: 'Date',
+            type: 'date',
+          },
+
+          {
+            title: 'Licensed provider contact:',
+            type: 'Signature',
+          },
+
+          {
+            title: 'Date',
+            type: 'date',
+          },
+
+          {
+            title: 'Other support team member (name and title):',
+            type: 'Signature',
+          },
+
+          {
+            title: 'Date',
+            type: 'date',
+          },
+
+          {
+            title: 'Other support team member (name and title):',
+            type: 'Signature',
+          },
+
+          {
+            title: 'Date',
+            type: 'date',
+          },
+        ],
+      },
+    ];
+
+    try {
+      const promissResult = await Promise.all(
+        questions.map(async (question, ind) => {
+          const questionCreate = await this.prisma.question.create({
+            data: {
+              title: question.title,
+              type: question.type as any,
+              // type: 'html',
+            },
+          });
+
+          // await Promise.all(
+          //   question.coloum?.map(async (sub, index) => {
+          //     return await this.prisma.coloum.create({
+          //       data: {
+          //         title: sub.title ?? 'Untitled',
+          //         questionId: questionCreate.id,
+          //         arrangement: index + 1,
+          //       },
+          //     });
+          //   }) ?? [],
+          // );
+
+          // ✅ Replace createMany with Promise.all to support relations
+          await Promise.all(
+            question.subQuestion?.map(async (sub, index) => {
+              const subquestion = await this.prisma.subQuestion.create({
+                data: {
+                  title: sub.title ?? 'Untitled',
+                  type: sub.type as any,
+                  arrangement: index + 1,
+                  questionId: questionCreate.id,
+                },
+              });
+
+              // if (sub.options && sub.options.length > 0) {
+              //   await Promise.all(
+              //     sub.options.map((opt) =>
+              //       this.prisma.option.create({
+              //         data: {
+              //           title: opt.title ?? 'Untitled',
+              //           type: opt.type as any,
+              //           subQuestionId: subquestion.id,
+              //           show: true
+              //         },
+              //       }),
+              //     ),
+              //   );
+              // }
+
+              return subquestion;
+            }) ?? [],
+          );
+
+          const formQuestion = await this.prisma.formQuestion.create({
+            data: {
+              formId: formId,
+              questionId: questionCreate.id,
+              arrangement: ind + 1,
+            },
+          });
+
+          return {
+            questionId: questionCreate.id,
+            formQuestionId: formQuestion.id,
+          };
+        }),
+      );
+
+      console.log(promissResult);
+
+      console.log(promissResult, 'promissResult');
+      return promissResult;
+    } catch (err) {
+      console.log(err, 'err');
+
+      return err;
     }
   }
 }

@@ -60,7 +60,7 @@ export class FormService {
   async getAllForms(id: string, response): Promise<any> {
     const result = await this.prisma.form.findMany({
       include: {
-        questions: {
+        formQuestions: {
           include: {
             question: {
               include: {
