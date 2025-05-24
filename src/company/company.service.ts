@@ -11,8 +11,17 @@ export class CompanyService {
   constructor(private prisma: PrismaService) {}
 
   async create(request: CreateCompanyDto, response): Promise<any> {
-    const { name, email, phone, address, state, city, zipCode, description } =
-      request;
+    const {
+      name,
+      email,
+      phone,
+      address,
+      state,
+      city,
+      zipCode,
+      description,
+      profilePic,
+    } = request;
 
     try {
       await this.prisma.company.create({
@@ -25,6 +34,7 @@ export class CompanyService {
           city,
           zipCode,
           description,
+          profilePic, // added
         },
       });
 
@@ -54,7 +64,16 @@ export class CompanyService {
   }
 
   async update(id: string, request: UpdateCompanyDto, response): Promise<any> {
-    const { name, email, phone, address, description, zipCode, city } = request;
+    const {
+      name,
+      email,
+      phone,
+      address,
+      description,
+      zipCode,
+      city,
+      profilePic,
+    } = request;
 
     try {
       const existingRecord = await this.prisma.company.findFirst({
@@ -95,6 +114,7 @@ export class CompanyService {
           description,
           zipCode,
           city,
+          profilePic,
         },
       });
 
@@ -116,6 +136,9 @@ export class CompanyService {
     try {
       const company = await this.prisma.company.findUnique({
         where: { id },
+        // include: {
+        //   profilePic: true,
+        // },
       });
       return response.status(200).send({
         data: company,

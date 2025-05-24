@@ -24,6 +24,7 @@ model Company {
   zipCode     String?
   state       String?
   description String?
+  profilePic String?
 
   users User[]
   // scheduledMeetings ScheduledMeeting[]

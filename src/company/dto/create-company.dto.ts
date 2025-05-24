@@ -5,9 +5,10 @@ export class CreateCompanyDto extends PickType(Company, [
   'name',
   'email',
   'phone',
-  'address', 
+  'address',
   'state',
   'city',
   'zipCode',
   'description',
+  'profilePic',
 ]) {}

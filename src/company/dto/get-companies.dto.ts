@@ -16,6 +16,7 @@ export class CompanyData {
   name: string;
   phone: string;
   email: string;
+  profilePic: string;
 }
 
 export class CompanyPaginator extends Paginator<CompanyData> {

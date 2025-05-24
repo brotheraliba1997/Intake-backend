@@ -47,4 +47,7 @@ export class Company {
   @IsNotEmpty()
   @IsString()
   description?: string;
+
+  @IsString()
+  profilePic?: string;
 }
