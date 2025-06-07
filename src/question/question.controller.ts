@@ -46,12 +46,12 @@ export class QuestionController {
   // }
 
 
-  // @Public()
-  // @Get('IndividualAbusePreventionPlan')
-  // // @Roles('admin')
-  // IndividualAbusePreventionPlan() {
-  //   return this.QuestionService.IndividualAbusePreventionPlan();
-  // }
+  @Public()
+  @Get('IndividualAbusePreventionPlan')
+  // @Roles('admin')
+  IndividualAbusePreventionPlan() {
+    return this.QuestionService.IndividualAbusePreventionPlan();
+  }
 
 
    @Public()
@@ -59,6 +59,16 @@ export class QuestionController {
   // @Roles('admin')
   SELFMANAGEMENTASSESSMENT() {
     return this.QuestionService.SELFMANAGEMENTASSESSMENT();
+  }
+
+    @Public()
+  @Get('AllPartOfFormListAndKey')
+  
+  // @Roles('admin')
+  AllPartOfFormListAndKey(
+     @Res() response: Response,
+  ) {
+    return this.QuestionService.AllPartOfFormListAndKey(response);
   }
 
   @Post()

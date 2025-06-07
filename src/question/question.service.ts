@@ -757,7 +757,7 @@ export class QuestionService {
         subQuestion: [
           {
             title: 'Signature',
-            type: 'text',
+            type: 'Signature',
           },
           {
             title: 'title',
@@ -765,7 +765,7 @@ export class QuestionService {
           },
           {
             title: 'Date',
-            type: 'text',
+            type: 'date',
           },
           {
             title: 'Name',
@@ -1703,5 +1703,713 @@ export class QuestionService {
 
       return err;
     }
+  }
+
+  async AllPartOfFormListAndKey(response) {
+    const formData = {
+      title: 'LIVING HOPE REFERAL FORM',
+      formQuestions: [
+        {
+          question: {
+            title: 'Date of Referral:',
+            type: 'date',
+          },
+        },
+
+        {
+          question: {
+            title: 'Client ID #',
+            type: 'number',
+          },
+        },
+
+        {
+          question: {
+            title: 'CLIENT INFORMATION',
+            type: 'html',
+            SubQuestion: [
+              {
+                title: 'Client’s last name:',
+                type: 'text',
+              },
+
+              {
+                title: 'First:',
+                type: 'text',
+              },
+
+              {
+                title: 'Middle:',
+                type: 'text',
+              },
+
+              {
+                title: 'Married/Single',
+                type: 'radio',
+                options: [
+                  { title: 'Mr', show: true, type: 'radio' },
+                  { title: 'Mrs', show: true, type: 'radio' },
+                  { title: 'Miss', show: true, type: 'radio' },
+                  { title: 'Ms', show: true, type: 'radio' },
+                ],
+              },
+
+              {
+                title: 'Marital status',
+                type: 'radio',
+                options: [
+                  { title: 'Single', show: true, type: 'radio' },
+                  { title: 'Married', show: true, type: 'radio' },
+                  { title: 'Divorce', show: true, type: 'radio' },
+                  { title: 'Separate', show: true, type: 'radio' },
+                  { title: 'widow', show: true, type: 'radio' },
+                ],
+              },
+
+              {
+                title: 'Is this your legal name?',
+                type: 'radio',
+                options: [
+                  { title: 'Yes', show: true, type: 'radio' },
+                  { title: 'No', show: true, type: 'radio' },
+                ],
+              },
+
+              {
+                title: 'Ethnicity:',
+                type: 'text',
+              },
+
+              {
+                title: 'Birth date:',
+                type: 'date',
+              },
+              {
+                title: 'Age:',
+                type: 'date',
+              },
+
+              {
+                title: 'Gender:',
+                type: 'radio',
+                options: [
+                  { title: 'M', show: true, type: 'radio' },
+                  { title: 'F', show: true, type: 'radio' },
+                ],
+              },
+
+              {
+                title: 'Street address:',
+                type: 'text',
+              },
+
+              {
+                title: 'City:',
+                type: 'text',
+              },
+
+              {
+                title: 'State:',
+                type: 'text',
+              },
+
+              {
+                title: 'ZIP Code:',
+                type: 'text',
+              },
+
+              {
+                title: 'Home phone no.:',
+                type: 'number',
+              },
+
+              {
+                title: 'Cell phone no.:',
+                type: 'number',
+              },
+
+              {
+                title: 'Work phone no.:',
+                type: 'number',
+              },
+
+              {
+                title: 'Emergency Contact Name:',
+                type: 'number',
+              },
+
+              {
+                title: 'Relationship:',
+                type: 'text',
+              },
+
+              {
+                title: 'Emergency phone no.:',
+                type: 'number',
+              },
+
+              {
+                title: 'Diagnosis:',
+                type: 'text',
+              },
+
+              {
+                title: 'Medical Concerns:',
+                type: 'text',
+              },
+
+              {
+                title: 'Are you a smoker?',
+                type: 'text',
+              },
+
+              {
+                title: 'Do you have animals in the house?',
+                type: 'radio',
+                options: [
+                  { title: 'Cat', show: true, type: 'radio' },
+                  { title: 'Dog', show: true, type: 'radio' },
+                  { title: 'Other:', show: true, type: 'radio' },
+                ],
+              },
+            ],
+          },
+        },
+
+        {
+          question: {
+            title: 'SPECIAL NEEDS',
+            type: 'html',
+            SubQuestion: [
+              {
+                title: 'Is there any known cultural consideration needs?',
+                type: 'radio',
+
+                options: [
+                  { title: 'Yes', show: true, type: 'radio' },
+                  { title: 'No', show: true, type: 'radio' },
+                  { title: 'other', show: true, type: 'radio' },
+                ],
+              },
+
+              {
+                title:
+                  'Is there any gender preference regarding the assigned staff?',
+                type: 'radio',
+
+                options: [
+                  { title: 'Yes', show: true, type: 'radio' },
+                  { title: 'No', show: true, type: 'radio' },
+                  { title: 'other', show: true, type: 'radio' },
+                ],
+              },
+            ],
+          },
+        },
+
+        {
+          question: {
+            title: 'INSURANCE INFORMATION',
+            type: 'html',
+            SubQuestion: [
+              {
+                title:
+                  'Insurance Provider: Prepaid Medical Assistant Payment (UCARE, HealthPartners, Medica, Blue Cross etc.):',
+                type: 'html',
+              },
+
+              {
+                title: 'Spend down?',
+                type: 'radio',
+
+                options: [
+                  { title: 'Yes', show: true, type: 'radio' },
+                  { title: 'No', show: true, type: 'radio' },
+                ],
+              },
+
+              {
+                title: 'if yes, has client agreed to pay the spend down',
+                type: 'radio',
+
+                options: [
+                  { title: 'Yes', show: true, type: 'radio' },
+                  { title: 'No', show: true, type: 'radio' },
+                ],
+              },
+
+              {
+                title: 'Insurance Provider:',
+                type: 'radio',
+
+                options: [
+                  { title: 'UCARE', show: true, type: 'radio' },
+                  { title: 'MEDICA', show: true, type: 'radio' },
+                  { title: 'Health Partners', show: true, type: 'radio' },
+                  {
+                    title: 'Blue Cross Blue Shield',
+                    show: true,
+                    type: 'radio',
+                  },
+                  {
+                    title: 'Metropolitan Health Plan',
+                    show: true,
+                    type: 'radio',
+                  },
+                  { title: 'Straight MA', show: true, type: 'radio' },
+                  { title: 'Other:', show: true, type: 'radio' },
+                ],
+              },
+
+              {
+                title: 'MA Subscriber ID #:',
+                type: 'number',
+              },
+
+              {
+                title: 'Primary Insurance #',
+                type: 'text',
+              },
+
+              {
+                title: 'Group #:',
+                type: 'text',
+              },
+            ],
+          },
+        },
+
+        {
+          question: {
+            title: 'VOCATIONAL PROGRAM REFERRAL',
+            type: 'html',
+            SubQuestion: [
+              {
+                title: 'What services are you seeking?',
+                type: 'radio',
+                options: [
+                  {
+                    title: 'Employment Exploration Services (EES) ',
+                    show: true,
+                    type: 'radio',
+                  },
+                  {
+                    title: 'Employment Development Services (EDS) ',
+                    show: true,
+                    type: 'radio',
+                  },
+                  {
+                    title: 'Employment Support Services (ESS) ',
+                    show: true,
+                    type: 'radio',
+                  },
+                  {
+                    title: 'Employment Exploration Services (EES) ',
+                    show: true,
+                    type: 'radio',
+                  },
+                  {
+                    title: 'Employment Exploration Services (EES) ',
+                    show: true,
+                    type: 'radio',
+                  },
+                  {
+                    title: 'Employment Exploration Services (EES) ',
+                    show: true,
+                    type: 'radio',
+                  },
+                ],
+              },
+
+              {
+                title: 'Are you currently Employed?',
+                type: 'text',
+              },
+
+              {
+                title:
+                  'Are you interested in looking for community employment?',
+                type: 'text',
+              },
+
+              {
+                title: 'Are you able to work unsupervised in the community?',
+                type: 'text',
+              },
+            ],
+          },
+        },
+
+        {
+          question: {
+            title: 'IN-HOME SUPPORT PROGRAM REFERRAL',
+            type: 'html',
+            SubQuestion: [
+              {
+                title: 'What services are you seeking?',
+                type: 'radio',
+                options: [
+                  {
+                    title:
+                      'Individualized Home Supports with Family training) ',
+                    show: true,
+                    type: 'radio',
+                  },
+                  {
+                    title:
+                      'Individualized Home Supports with training Supported ',
+                    show: true,
+                    type: 'radio',
+                  },
+                  {
+                    title: 'Individualized Home Supports ',
+                    show: true,
+                    type: 'radio',
+                  },
+                  {
+                    title: 'Supported Living Services (SLS)) ',
+                    show: true,
+                    type: 'radio',
+                  },
+                ],
+              },
+
+              {
+                title: 'Types of service Support/goals:',
+                type: 'radio',
+                options: [
+                  {
+                    title: 'Organization ',
+                    show: true,
+                    type: 'radio',
+                  },
+                  {
+                    title: 'Budget planning ',
+                    show: true,
+                    type: 'radio',
+                  },
+                  {
+                    title: 'Meal Planning ',
+                    show: true,
+                    type: 'radio',
+                  },
+                  {
+                    title: 'Cooking ',
+                    show: true,
+                    type: 'radio',
+                  },
+
+                  {
+                    title: 'Exercising ',
+                    show: true,
+                    type: 'radio',
+                  },
+
+                  {
+                    title: 'Grocery shopping ',
+                    show: true,
+                    type: 'radio',
+                  },
+
+                  {
+                    title: 'Other: ',
+                    show: true,
+                    type: 'radio',
+                  },
+                ],
+              },
+
+              {
+                title: 'Do you have a risk for falling?',
+                type: 'text',
+              },
+            ],
+          },
+        },
+
+        {
+          question: {
+            title: 'OTHER SERVICE REFERRAL',
+            type: 'html',
+            SubQuestion: [
+              {
+                title: 'What services are you seeking?',
+                type: 'radio',
+                options: [
+                  {
+                    title: '24-hour Emergency assistance ',
+                    show: true,
+                    type: 'radio',
+                  },
+                  {
+                    title: 'Adult Companion services',
+                    show: true,
+                    type: 'radio',
+                  },
+                  {
+                    title: 'Homemaker ',
+                    show: true,
+                    type: 'radio',
+                  },
+                  {
+                    title: 'Individual Community Living Support',
+                    show: true,
+                    type: 'radio',
+                  },
+
+                  {
+                    title: 'Nigh supervision ',
+                    show: true,
+                    type: 'radio',
+                  },
+
+                  {
+                    title: 'Respite, in home or out-of-home',
+                    show: true,
+                    type: 'radio',
+                  },
+
+                  {
+                    title: 'Crisis Respite, in home or out-of-home',
+                    show: true,
+                    type: 'radio',
+                  },
+
+                  {
+                    title: 'Positive Supports',
+                    show: true,
+                    type: 'radio',
+                  },
+
+                  {
+                    title: 'Specialist services',
+                    show: true,
+                    type: 'radio',
+                  },
+
+                  {
+                    title: 'Community Residential Setting (CRS)',
+                    show: true,
+                    type: 'radio',
+                  },
+
+                  {
+                    title: 'Integrated Community Supports',
+                    show: true,
+                    type: 'radio',
+                  },
+                ],
+              },
+
+              {
+                title: 'Do you have a risk for falling?',
+                type: 'text',
+              },
+            ],
+          },
+        },
+
+        {
+          question: {
+            title: 'REFERRAL SOURCE N/A',
+            type: 'html',
+            SubQuestion: [
+              {
+                title: 'Referring Worker’s Name:',
+                type: 'text',
+              },
+
+              {
+                title: 'County or Organization / Department:',
+                type: 'text',
+              },
+
+              {
+                title: 'Address:',
+                type: 'text',
+              },
+
+              {
+                title: 'City:',
+                type: 'text',
+              },
+
+              {
+                title: 'State: MN Zip:',
+                type: 'number',
+              },
+
+              {
+                title: 'Work Phone:',
+                type: 'number',
+              },
+
+              {
+                title: 'Fax Phone:',
+                type: 'number',
+              },
+
+              {
+                title: 'Email',
+                type: 'email',
+              },
+
+              {
+                title:
+                  'Would you like to be updated on all assessment scheduling & treatment of services?',
+                type: 'radio',
+                options: [
+                  {
+                    title: 'Yes ',
+                    show: true,
+                    type: 'radio',
+                  },
+
+                  {
+                    title: 'No ',
+                    show: true,
+                    type: 'radio',
+                  },
+                ],
+              },
+            ],
+          },
+        },
+
+        {
+          question: {
+            title:
+              'MENTAL HEALTH DIAGNOSIS (PREVIOUS, IF KNOWN) OR WRITE NAME OF DX',
+            type: 'html',
+            SubQuestion: [
+              {
+                title: 'Axis |',
+                type: 'text',
+              },
+
+              {
+                title: 'Axis ||',
+                type: 'text',
+              },
+
+              {
+                title: 'Axis |||',
+                type: 'text',
+              },
+            ],
+          },
+        },
+
+        {
+          question: {
+            title: `<p> Referrals and copies of documents can be mailed or faxed <p> 
+        <p> to: Living Hope, LLC <p> 
+        <p> 5400 Opportunity Court Dr STE 110 <p> 
+        <p> Hopkins, MN 55343 <p> 
+        <p> PH: (612)352-9139 FAX: (612)605-0062 <p> 
+        `,
+            type: 'html',
+          },
+        },
+      ],
+    };
+
+    // Step 1: Create Form
+    const newForm = await this.prisma.form.create({
+      data: {
+        title: formData.title,
+      },
+    });
+
+    // Step 2: Create Questions + FormQuestions
+    const insertPromises = formData.formQuestions.map(
+      async (formQ, formQIndex) => {
+        const question = formQ.question;
+
+        // Step 2a: Process subQuestions and add arrangement index
+        const subQuestionsWithArrangement = question.SubQuestion?.map(
+          (subQ, subIndex) => ({
+            title: subQ.title,
+            type: subQ.type as any,
+            arrangement: subIndex + 1,
+            options: subQ.options
+              ? {
+                  create: subQ.options.map((opt) => ({
+                    title: opt.title,
+                    type: opt.type as any,
+                    show: opt.show ?? false,
+                  })),
+                }
+              : undefined,
+          }),
+        );
+
+        // const formattedOptions = question.options?.map((opt) => ({
+        //   title: opt.title,
+        //   show: opt.show ?? false,
+        //   type: opt.type as any, // ✅ type safe
+        // }));
+
+        // Step 2b: Create question
+        const createdQuestion = await this.prisma.question.create({
+          data: {
+            title: question.title,
+            type: question.type as any,
+            // options: question.options
+            //   ? { create: formattedOptions }
+            //   : undefined,
+
+            SubQuestion: subQuestionsWithArrangement
+              ? { create: subQuestionsWithArrangement }
+              : undefined,
+          },
+          include: {
+            options: true,
+            coloum: true,
+            SubQuestion: {
+              include: {
+                options: true,
+              },
+            },
+          },
+        });
+
+        // Step 2c: Create formQuestion with arrangement as index + 1
+        const createdFormQuestion = await this.prisma.formQuestion.create({
+          data: {
+            formId: newForm.id,
+            questionId: createdQuestion.id,
+            // title: formQ.title,
+            // type: formQ.type,
+            arrangement: formQIndex + 1,
+          },
+          include: {
+            question: {
+              include: {
+                options: true,
+                coloum: true,
+                SubQuestion: {
+                  include: {
+                    options: true,
+                  },
+                },
+              },
+            },
+          },
+        });
+
+        return createdFormQuestion;
+      },
+    );
+
+    const finalFormQuestions = await Promise.all(insertPromises);
+
+    return response.status(200).send({
+      status: 'success',
+      data: {
+        form: newForm,
+        formQuestions: finalFormQuestions,
+      },
+    });
   }
 }

@@ -9,15 +9,18 @@ import {
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 
-export enum InputTypeOption {
+enum InputTypeOption {
   file = 'file',
   text = 'text',
   radio = 'radio',
   checkbox = 'checkbox',
-  textarea = 'textarea',
   table = 'table',
   html = 'html',
+  textarea = 'textarea',
   date = 'date',
+  Signature = 'Signature',
+  number = 'number',
+  email = 'email',
 }
 
 export class Question {
