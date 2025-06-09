@@ -1733,7 +1733,7 @@ export class QuestionService {
   <ol>
     <li>
       A registered nurse or licensed practical nurse will administer the injections;
-    </li>ss
+    </li>
     <li>
       A supervising registered nurse with a physician’s order has delegated the administration of injectable medication
       to an unlicensed staff member and has provided the necessary training;
