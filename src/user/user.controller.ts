@@ -58,10 +58,10 @@ export class UserController {
     @CurrentUser() user: any,
     @Body() createUserDto: CreateUserDto,
   ) {
-    if (!user.id) {
-      throw new BadRequestException('User creation failed.');
-    }
-
+    // if (!user.id) {
+    //   throw new BadRequestException('User creation failed.');
+    // }
+    console.log('create user=>');
     if (user.role === 'admin' && !createUserDto.companyId) {
       throw new BadRequestException('admin need company id ');
     }
@@ -70,6 +70,17 @@ export class UserController {
       createUserDto.companyId = user.companyId;
     }
 
+    if (user.role == 'admin') {
+      createUserDto.companyId = user.companyId;
+    }
+    if (createUserDto.role == 'admin') {
+      const adminFound = await this.usersService.findAdminByCompanyId(
+        createUserDto.companyId,
+      );
+      if (adminFound)
+        throw new BadRequestException('Company Admin already exists');
+    }
+    console.log('check check=>', createUserDto);
     const createdUser: any = await this.usersService.create(createUserDto);
 
     // if (
@@ -89,12 +100,13 @@ export class UserController {
     return {
       status: 'success',
       message: 'User created successfully',
+      data: createdUser,
     };
   }
 
   @Get()
   getAllUsers(@Query() query: GetUsersDto, @CurrentUser() user: any) {
-    // console.log('user=>', user);
+    console.log('user=>', user);
     if (user.role == 'admin') {
       query.companyId = user.companyId;
     }

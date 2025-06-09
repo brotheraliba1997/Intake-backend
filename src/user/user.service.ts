@@ -87,7 +87,7 @@ export class UserService {
     // try {
     const lastUser = await this.prisma.user.findFirst({
       orderBy: {
-        createdAt: 'desc', 
+        createdAt: 'desc',
       },
     });
     const lastUserRefrenceNumber = lastUser.referenceNumber ?? 'AX00000';
@@ -102,7 +102,6 @@ export class UserService {
     });
 
     return userCreated;
-
   }
 
   async update(id: string, request: UpdateUserDto, response): Promise<any> {
@@ -537,5 +536,12 @@ export class UserService {
         id: true,
       },
     });
+  }
+
+  async findAdminByCompanyId(companyId: string): Promise<any> {
+    const user = await this.prisma.user.findFirst({
+      where: { companyId, role: 'admin' },
+    });
+    return user;
   }
 }

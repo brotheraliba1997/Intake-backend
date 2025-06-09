@@ -65,6 +65,7 @@ export class CompanyController {
     @Res() response: Response,
     @CurrentUser() user: any,
   ) {
+    console.log('check-=>');
     if (user?.companyId === id || user?.role === 'super_admin') {
       return this.companyService.getCompanyById(id, response);
     } else {
