@@ -1706,613 +1706,152 @@ export class QuestionService {
   }
 
   async AllPartOfFormListAndKey(response) {
-    const formData = {
-      title: 'LIVING HOPE REFERAL FORM',
-      formQuestions: [
-        {
-          question: {
-            title: 'Date of Referral:',
-            type: 'date',
+   const formData = {
+  title: 'AUTHORIZATION AND AGREEMENT FOR INJECTABLE MEDICATIONS',
+  formQuestions: [
+    {
+      question: {
+        title: 'Name',
+        type: 'text',
+      },
+    },
+
+    {
+      question: {
+        title: 'Date of birth:',
+        type: 'text',
+      },
+    },
+
+    {
+      question: {
+        title: `<div>
+  <p>
+    Injectable medications may be administered according to prescriber’s order and written instructions when one of the
+    following has been met:
+  </p>
+  <ol>
+    <li>
+      A registered nurse or licensed practical nurse will administer the injections;
+    </li>
+    <li>
+      A supervising registered nurse with a physician’s order has delegated the administration of injectable medication
+      to an unlicensed staff member and has provided the necessary training;
+    </li>
+    <li>
+      There is an agreement signed by the company’s Designated Coordinator and/or Designated Manager and the
+      person served and/or legal representative specifying what injections may be given, when, how, and that the
+      prescriber must retain responsibility for the license holder’s giving the injections.
+    </li>
+  </ol>
+</div>
+`,
+        type: 'html',
+      },
+    },
+
+    {
+      question: {
+        title:
+          'The following injectable medications that are marked with an “X” have a prescriber’s order and written instructions and may be given:',
+        type: 'radio',
+        SubQuestion: [
+          {
+            title: 'Epi-pen',
+            type: 'radio',
           },
-        },
 
-        {
-          question: {
-            title: 'Client ID #',
-            type: 'number',
+          {
+            title: 'Pre-drawn Insulin Syringes',
+            type: 'radio',
           },
-        },
 
-        {
-          question: {
-            title: 'CLIENT INFORMATION',
-            type: 'html',
-            SubQuestion: [
-              {
-                title: 'Client’s last name:',
-                type: 'text',
-              },
-
-              {
-                title: 'First:',
-                type: 'text',
-              },
-
-              {
-                title: 'Middle:',
-                type: 'text',
-              },
-
-              {
-                title: 'Married/Single',
-                type: 'radio',
-                options: [
-                  { title: 'Mr', show: true, type: 'radio' },
-                  { title: 'Mrs', show: true, type: 'radio' },
-                  { title: 'Miss', show: true, type: 'radio' },
-                  { title: 'Ms', show: true, type: 'radio' },
-                ],
-              },
-
-              {
-                title: 'Marital status',
-                type: 'radio',
-                options: [
-                  { title: 'Single', show: true, type: 'radio' },
-                  { title: 'Married', show: true, type: 'radio' },
-                  { title: 'Divorce', show: true, type: 'radio' },
-                  { title: 'Separate', show: true, type: 'radio' },
-                  { title: 'widow', show: true, type: 'radio' },
-                ],
-              },
-
-              {
-                title: 'Is this your legal name?',
-                type: 'radio',
-                options: [
-                  { title: 'Yes', show: true, type: 'radio' },
-                  { title: 'No', show: true, type: 'radio' },
-                ],
-              },
-
-              {
-                title: 'Ethnicity:',
-                type: 'text',
-              },
-
-              {
-                title: 'Birth date:',
-                type: 'date',
-              },
-              {
-                title: 'Age:',
-                type: 'date',
-              },
-
-              {
-                title: 'Gender:',
-                type: 'radio',
-                options: [
-                  { title: 'M', show: true, type: 'radio' },
-                  { title: 'F', show: true, type: 'radio' },
-                ],
-              },
-
-              {
-                title: 'Street address:',
-                type: 'text',
-              },
-
-              {
-                title: 'City:',
-                type: 'text',
-              },
-
-              {
-                title: 'State:',
-                type: 'text',
-              },
-
-              {
-                title: 'ZIP Code:',
-                type: 'text',
-              },
-
-              {
-                title: 'Home phone no.:',
-                type: 'number',
-              },
-
-              {
-                title: 'Cell phone no.:',
-                type: 'number',
-              },
-
-              {
-                title: 'Work phone no.:',
-                type: 'number',
-              },
-
-              {
-                title: 'Emergency Contact Name:',
-                type: 'number',
-              },
-
-              {
-                title: 'Relationship:',
-                type: 'text',
-              },
-
-              {
-                title: 'Emergency phone no.:',
-                type: 'number',
-              },
-
-              {
-                title: 'Diagnosis:',
-                type: 'text',
-              },
-
-              {
-                title: 'Medical Concerns:',
-                type: 'text',
-              },
-
-              {
-                title: 'Are you a smoker?',
-                type: 'text',
-              },
-
-              {
-                title: 'Do you have animals in the house?',
-                type: 'radio',
-                options: [
-                  { title: 'Cat', show: true, type: 'radio' },
-                  { title: 'Dog', show: true, type: 'radio' },
-                  { title: 'Other:', show: true, type: 'radio' },
-                ],
-              },
-            ],
+          {
+            title: 'Insulin Pens',
+            type: 'radio',
           },
-        },
 
-        {
-          question: {
-            title: 'SPECIAL NEEDS',
-            type: 'html',
-            SubQuestion: [
-              {
-                title: 'Is there any known cultural consideration needs?',
-                type: 'radio',
-
-                options: [
-                  { title: 'Yes', show: true, type: 'radio' },
-                  { title: 'No', show: true, type: 'radio' },
-                  { title: 'other', show: true, type: 'radio' },
-                ],
-              },
-
-              {
-                title:
-                  'Is there any gender preference regarding the assigned staff?',
-                type: 'radio',
-
-                options: [
-                  { title: 'Yes', show: true, type: 'radio' },
-                  { title: 'No', show: true, type: 'radio' },
-                  { title: 'other', show: true, type: 'radio' },
-                ],
-              },
-            ],
+          {
+            title: 'Glucagon – Specific instructions attached',
+            type: 'radio',
           },
-        },
 
-        {
-          question: {
-            title: 'INSURANCE INFORMATION',
-            type: 'html',
-            SubQuestion: [
-              {
-                title:
-                  'Insurance Provider: Prepaid Medical Assistant Payment (UCARE, HealthPartners, Medica, Blue Cross etc.):',
-                type: 'html',
-              },
-
-              {
-                title: 'Spend down?',
-                type: 'radio',
-
-                options: [
-                  { title: 'Yes', show: true, type: 'radio' },
-                  { title: 'No', show: true, type: 'radio' },
-                ],
-              },
-
-              {
-                title: 'if yes, has client agreed to pay the spend down',
-                type: 'radio',
-
-                options: [
-                  { title: 'Yes', show: true, type: 'radio' },
-                  { title: 'No', show: true, type: 'radio' },
-                ],
-              },
-
-              {
-                title: 'Insurance Provider:',
-                type: 'radio',
-
-                options: [
-                  { title: 'UCARE', show: true, type: 'radio' },
-                  { title: 'MEDICA', show: true, type: 'radio' },
-                  { title: 'Health Partners', show: true, type: 'radio' },
-                  {
-                    title: 'Blue Cross Blue Shield',
-                    show: true,
-                    type: 'radio',
-                  },
-                  {
-                    title: 'Metropolitan Health Plan',
-                    show: true,
-                    type: 'radio',
-                  },
-                  { title: 'Straight MA', show: true, type: 'radio' },
-                  { title: 'Other:', show: true, type: 'radio' },
-                ],
-              },
-
-              {
-                title: 'MA Subscriber ID #:',
-                type: 'number',
-              },
-
-              {
-                title: 'Primary Insurance #',
-                type: 'text',
-              },
-
-              {
-                title: 'Group #:',
-                type: 'text',
-              },
-            ],
+          {
+            title: 'Other:',
+            type: 'radio',
           },
-        },
+        ],
+      },
+    },
 
-        {
-          question: {
-            title: 'VOCATIONAL PROGRAM REFERRAL',
-            type: 'html',
-            SubQuestion: [
-              {
-                title: 'What services are you seeking?',
-                type: 'radio',
-                options: [
-                  {
-                    title: 'Employment Exploration Services (EES) ',
-                    show: true,
-                    type: 'radio',
-                  },
-                  {
-                    title: 'Employment Development Services (EDS) ',
-                    show: true,
-                    type: 'radio',
-                  },
-                  {
-                    title: 'Employment Support Services (ESS) ',
-                    show: true,
-                    type: 'radio',
-                  },
-                  {
-                    title: 'Employment Exploration Services (EES) ',
-                    show: true,
-                    type: 'radio',
-                  },
-                  {
-                    title: 'Employment Exploration Services (EES) ',
-                    show: true,
-                    type: 'radio',
-                  },
-                  {
-                    title: 'Employment Exploration Services (EES) ',
-                    show: true,
-                    type: 'radio',
-                  },
-                ],
-              },
-
-              {
-                title: 'Are you currently Employed?',
-                type: 'text',
-              },
-
-              {
-                title:
-                  'Are you interested in looking for community employment?',
-                type: 'text',
-              },
-
-              {
-                title: 'Are you able to work unsupervised in the community?',
-                type: 'text',
-              },
-            ],
+    {
+      question: {
+        title:
+          'For the above checked injectable medications, please provide information regarding:',
+        type: 'text',
+        SubQuestion: [
+          {
+            title: 'When the medication may be given:',
+            type: 'text',
           },
-        },
 
-        {
-          question: {
-            title: 'IN-HOME SUPPORT PROGRAM REFERRAL',
-            type: 'html',
-            SubQuestion: [
-              {
-                title: 'What services are you seeking?',
-                type: 'radio',
-                options: [
-                  {
-                    title:
-                      'Individualized Home Supports with Family training) ',
-                    show: true,
-                    type: 'radio',
-                  },
-                  {
-                    title:
-                      'Individualized Home Supports with training Supported ',
-                    show: true,
-                    type: 'radio',
-                  },
-                  {
-                    title: 'Individualized Home Supports ',
-                    show: true,
-                    type: 'radio',
-                  },
-                  {
-                    title: 'Supported Living Services (SLS)) ',
-                    show: true,
-                    type: 'radio',
-                  },
-                ],
-              },
-
-              {
-                title: 'Types of service Support/goals:',
-                type: 'radio',
-                options: [
-                  {
-                    title: 'Organization ',
-                    show: true,
-                    type: 'radio',
-                  },
-                  {
-                    title: 'Budget planning ',
-                    show: true,
-                    type: 'radio',
-                  },
-                  {
-                    title: 'Meal Planning ',
-                    show: true,
-                    type: 'radio',
-                  },
-                  {
-                    title: 'Cooking ',
-                    show: true,
-                    type: 'radio',
-                  },
-
-                  {
-                    title: 'Exercising ',
-                    show: true,
-                    type: 'radio',
-                  },
-
-                  {
-                    title: 'Grocery shopping ',
-                    show: true,
-                    type: 'radio',
-                  },
-
-                  {
-                    title: 'Other: ',
-                    show: true,
-                    type: 'radio',
-                  },
-                ],
-              },
-
-              {
-                title: 'Do you have a risk for falling?',
-                type: 'text',
-              },
-            ],
+          {
+            title: 'How the medication may be given:',
+            type: 'text',
           },
-        },
+        ],
+      },
+    },
 
-        {
-          question: {
-            title: 'OTHER SERVICE REFERRAL',
-            type: 'html',
-            SubQuestion: [
-              {
-                title: 'What services are you seeking?',
-                type: 'radio',
-                options: [
-                  {
-                    title: '24-hour Emergency assistance ',
-                    show: true,
-                    type: 'radio',
-                  },
-                  {
-                    title: 'Adult Companion services',
-                    show: true,
-                    type: 'radio',
-                  },
-                  {
-                    title: 'Homemaker ',
-                    show: true,
-                    type: 'radio',
-                  },
-                  {
-                    title: 'Individual Community Living Support',
-                    show: true,
-                    type: 'radio',
-                  },
+    {
+      question: {
+        title:
+          'A health care professional or pharmacist will prepare specified dosages in advance according to a prescriber’s order. Staff will administer the medication according to the prescriber’s order and written instructions and only after receiving specific training by a registered nurse or licensed health care professional. Staff who have not been specifically trained will not administer any injectable medication.',
+        type: 'html',
+      },
+    },
 
-                  {
-                    title: 'Nigh supervision ',
-                    show: true,
-                    type: 'radio',
-                  },
-
-                  {
-                    title: 'Respite, in home or out-of-home',
-                    show: true,
-                    type: 'radio',
-                  },
-
-                  {
-                    title: 'Crisis Respite, in home or out-of-home',
-                    show: true,
-                    type: 'radio',
-                  },
-
-                  {
-                    title: 'Positive Supports',
-                    show: true,
-                    type: 'radio',
-                  },
-
-                  {
-                    title: 'Specialist services',
-                    show: true,
-                    type: 'radio',
-                  },
-
-                  {
-                    title: 'Community Residential Setting (CRS)',
-                    show: true,
-                    type: 'radio',
-                  },
-
-                  {
-                    title: 'Integrated Community Supports',
-                    show: true,
-                    type: 'radio',
-                  },
-                ],
-              },
-
-              {
-                title: 'Do you have a risk for falling?',
-                type: 'text',
-              },
-            ],
+    {
+      question: {
+        title:
+          'Only a licensed health care professional will administer psychotropic medications by injection.',
+        type: 'html',
+        SubQuestion: [
+          {
+            title: 'Person served and/or legal representative',
+            type: 'Signature',
           },
-        },
 
-        {
-          question: {
-            title: 'REFERRAL SOURCE N/A',
-            type: 'html',
-            SubQuestion: [
-              {
-                title: 'Referring Worker’s Name:',
-                type: 'text',
-              },
-
-              {
-                title: 'County or Organization / Department:',
-                type: 'text',
-              },
-
-              {
-                title: 'Address:',
-                type: 'text',
-              },
-
-              {
-                title: 'City:',
-                type: 'text',
-              },
-
-              {
-                title: 'State: MN Zip:',
-                type: 'number',
-              },
-
-              {
-                title: 'Work Phone:',
-                type: 'number',
-              },
-
-              {
-                title: 'Fax Phone:',
-                type: 'number',
-              },
-
-              {
-                title: 'Email',
-                type: 'email',
-              },
-
-              {
-                title:
-                  'Would you like to be updated on all assessment scheduling & treatment of services?',
-                type: 'radio',
-                options: [
-                  {
-                    title: 'Yes ',
-                    show: true,
-                    type: 'radio',
-                  },
-
-                  {
-                    title: 'No ',
-                    show: true,
-                    type: 'radio',
-                  },
-                ],
-              },
-            ],
+          {
+            title: 'Date',
+            type: 'text',
           },
-        },
 
-        {
-          question: {
-            title:
-              'MENTAL HEALTH DIAGNOSIS (PREVIOUS, IF KNOWN) OR WRITE NAME OF DX',
-            type: 'html',
-            SubQuestion: [
-              {
-                title: 'Axis |',
-                type: 'text',
-              },
-
-              {
-                title: 'Axis ||',
-                type: 'text',
-              },
-
-              {
-                title: 'Axis |||',
-                type: 'text',
-              },
-            ],
+          {
+            title: 'Prescriber',
+            type: 'Signature',
           },
-        },
 
-        {
-          question: {
-            title: `<p> Referrals and copies of documents can be mailed or faxed <p> 
-        <p> to: Living Hope, LLC <p> 
-        <p> 5400 Opportunity Court Dr STE 110 <p> 
-        <p> Hopkins, MN 55343 <p> 
-        <p> PH: (612)352-9139 FAX: (612)605-0062 <p> 
-        `,
-            type: 'html',
+          {
+            title: 'Date',
+            type: 'text',
           },
-        },
-      ],
-    };
+
+          {
+            title: 'Designated Coordinator and/or Designated Manager signature',
+            type: 'Signature',
+          },
+
+          {
+            title: 'Date',
+            type: 'text',
+          },
+        ],
+      },
+    },
+  ],
+};
+
 
     // Step 1: Create Form
     const newForm = await this.prisma.form.create({
@@ -2332,15 +1871,15 @@ export class QuestionService {
             title: subQ.title,
             type: subQ.type as any,
             arrangement: subIndex + 1,
-            options: subQ.options
-              ? {
-                  create: subQ.options.map((opt) => ({
-                    title: opt.title,
-                    type: opt.type as any,
-                    show: opt.show ?? false,
-                  })),
-                }
-              : undefined,
+            // options: subQ.options
+            //   ? {
+            //       create: subQ.options.map((opt) => ({
+            //         title: opt.title,
+            //         type: opt.type as any,
+            //         show: opt.show ?? false,
+            //       })),
+            //     }
+            //   : undefined,
           }),
         );
 
@@ -2359,9 +1898,9 @@ export class QuestionService {
             //   ? { create: formattedOptions }
             //   : undefined,
 
-            SubQuestion: subQuestionsWithArrangement
-              ? { create: subQuestionsWithArrangement }
-              : undefined,
+            // SubQuestion: subQuestionsWithArrangement
+            //   ? { create: subQuestionsWithArrangement }
+            //   : undefined,
           },
           include: {
             options: true,
