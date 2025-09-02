@@ -61,15 +61,15 @@ export class QuestionController {
     return this.QuestionService.SELFMANAGEMENTASSESSMENT();
   }
 
-  //   @Public()
-  // @Get('AllPartOfFormListAndKey')
+    @Public()
+  @Get('AllPartOfFormListAndKey')
   
-  // // @Roles('admin') yeh hai entry ke liye is mein subQuestion question sub hai so fikar nahi 
-  // AllPartOfFormListAndKey(
-  //    @Res() response: Response,
-  // ) {
-  //   return this.QuestionService.AllPartOfFormListAndKey(response);
-  // }
+  // @Roles('admin') yeh hai entry ke liye is mein subQuestion question sub hai so fikar nahi 
+  AllPartOfFormListAndKey(
+     @Res() response: Response,
+  ) {
+    return this.QuestionService.AllPartOfFormListAndKey(response);
+  }
 
   @Post()
   // @Roles('admin')

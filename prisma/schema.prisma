@@ -24,7 +24,7 @@ model Company {
   zipCode     String?
   state       String?
   description String?
-  profilePic String?
+  profilePic  String?
 
   users User[]
   // scheduledMeetings ScheduledMeeting[]
@@ -556,12 +556,12 @@ enum AppointmentStatus {
 // question section for intake from
 
 model Question {
-  id           String          @id @default(auto()) @map("_id") @db.ObjectId
-  title        String
-  type         InputTypeOption @default(text)
-  options      Option[]
+  id            String          @id @default(auto()) @map("_id") @db.ObjectId
+  title         String
+  type          InputTypeOption @default(text)
+  options       Option[]
   formQuestions FormQuestion[]
-  SubQuestion  SubQuestion[]
+  SubQuestion   SubQuestion[]
 
   coloum coloum[]
   Answer Answer[]
@@ -624,7 +624,7 @@ model Form {
   id               String             @id @default(auto()) @map("_id") @db.ObjectId
   title            String
   createdAt        DateTime           @default(now())
-  formQuestions        FormQuestion[] // linked questions
+  formQuestions    FormQuestion[] // linked questions
   AnswerSubmission AnswerSubmission[]
 }
 
@@ -632,7 +632,7 @@ model FormQuestion {
   id          String           @id @default(auto()) @map("_id") @db.ObjectId
   form        Form             @relation(fields: [formId], references: [id])
   formId      String           @db.ObjectId
-  question    Question?       @relation(fields: [questionId], references: [id])
+  question    Question?        @relation(fields: [questionId], references: [id])
   questionId  String?          @db.ObjectId
   title       String?
   type        InputTypeOption?
@@ -685,4 +685,36 @@ model MultipleValues {
   answerId   String? @db.ObjectId
 
   @@map("multipleValues")
+}
+
+model ProductPoint {
+  id        String     @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  sku       String     @unique
+  barcode   String?
+  price     Float
+  image     String
+  stockQty  Int
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  SaleItem  SaleItem[]
+}
+
+model Sale {
+  id            String     @id @default(auto()) @map("_id") @db.ObjectId
+  invoiceNumber String
+  totalAmount   Float
+  createdAt     DateTime   @default(now())
+  SaleItem      SaleItem[]
+}
+
+model SaleItem {
+  id             String       @id @default(auto()) @map("_id") @db.ObjectId
+  product        ProductPoint @relation(fields: [productPointId], references: [id])
+  sale           Sale         @relation(fields: [saleId], references: [id])
+  productPointId String
+  saleId         String
+  quantity       String
+  price          Float
+  subtotal       Float
 }

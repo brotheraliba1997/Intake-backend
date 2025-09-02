@@ -9,7 +9,6 @@ import { UserModule } from './user/user.module';
 import { CompanyModule } from './company/company.module';
 import { QuestionModule } from './question/question.module';
 
-
 // import { ChatModule } from './chat/chat.module';
 import { NotificationModule } from './notification/notification.module';
 // import { WebSocketModule } from './websocket/websocket.module';
@@ -18,6 +17,8 @@ import { NotificationModule } from './notification/notification.module';
 import { SubscriptionModule } from './subscription/subscription.module';
 import { FormModule } from './form/form.module';
 import { AnswerModule } from './answer/answer.module';
+import { saleModule } from './sale/sale.module';
+import { ProductModule } from './productPoint/productService.module';
 
 // import { UserSessionModule } from './userSession/userSession.module';
 
@@ -30,19 +31,13 @@ import { AnswerModule } from './answer/answer.module';
     UserModule,
     CompanyModule,
     QuestionModule,
-    // ProviderModule,
 
-    // ChatModule,
-   
     NotificationModule,
     SubscriptionModule,
     FormModule,
     AnswerModule,
-    
-
-
-    // UserSessionModule,
-
+    saleModule,
+    ProductModule,
   ],
   controllers: [AppController],
   providers: [AppService],
