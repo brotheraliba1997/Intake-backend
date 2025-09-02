@@ -46,7 +46,7 @@ export class ProductService {
     
     }
 
-    console.log(saleItemsData, "saleItemsData")
+   
 
     const invoiceNumber = `INV-${Date.now()}`;
 
